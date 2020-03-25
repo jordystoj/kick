@@ -1,0 +1,50 @@
+include ../navbar
+
+block content
+    .container
+        .d-sm-flex.mt-4.justify-content-between.d-flex-xs-column
+            a(href="/user/posts/create").card.boxShadowCards.text-decoration-none.mt-3.text-center
+                .card-body
+                    h5.card-title Create New Post
+                        span.ml-4(data-feather='file-plus')
+
+    .container.mt-4
+        .card
+            .card-header.bg-primary.text-white
+                span.h4 Your Posts
+
+                span.float-right.h4 #{ moment().format('ll') }
+            .card-body
+                if posts.length === 0
+                    h4.text-secondary.text-center.mt-3 You have no posts
+                else 
+                    each post in posts
+                        .row
+                            .col-md-7.mt-3
+                                .d-flex-column
+                                    .card.boxShadowCards.w-100
+                                        img.card-img-top(height="150px" src=post.thumbnail) 
+                                        .card-body
+                                            h4.card-title #{ post.title }
+                                            p.card-text #{ post.postContent.replace(/(([^\s]+\s\s*){20})(.*)/,"$1…") }
+                                            a.btn.btn-primary(href="/post/"+post._id) Read More
+
+                            //- .card.boxShadowCards.w-100
+                            //-     img.card-img-top(height="150px" src="https://mens.nplnsw.com.au/wp-content/uploads/sites/5/2017/03/2019083001_JN_4345_5D0F543ECB81B22795B0664E0315C982-2600x700_c.jpg") 
+                            //-     .card-body
+                            //-         h4.card-title Article Title
+                            //-         p.card-text Breif statement from the actual post itself
+                            //-         a.btn.btn-primary(href="#") Read More
+                            //- .card.boxShadowCards.w-100.mt-3
+                            //-     img.card-img-top(height="150px" src="https://mens.nplnsw.com.au/wp-content/uploads/sites/5/2017/03/2019083001_JN_4345_5D0F543ECB81B22795B0664E0315C982-2600x700_c.jpg") 
+                            //-     .card-body
+                            //-         h4.card-title Article Title
+                            //-         p.card-text Breif statement from the actual post itself
+                            //-         a.btn.btn-primary(href="#") Read More
+                    .col-md-1
+                    .col-md-4.mt-4
+                        .d-flex-column
+                            
+    script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
+    script.
+        feather.replace()

@@ -1,0 +1,17 @@
+.d-sm-flex.mt-4.justify-content-between.d-flex-xs-column
+    button(type="button").card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton
+        .card-body
+            h5.card-title Goalkeepers
+                span.ml-4.text-primary #{ goalkeepers }
+    button(type="button" data-toggle="modal" data-target="#viewTeamsModal").card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton
+        .card-body
+            h5.card-title Defenders
+                span.ml-4.text-primary #{ defenders }
+    button(type="button" data-toggle="modal" data-target="#viewClubsModal").card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton            
+        .card-body
+            h5.card-title Midfielders
+                span.ml-4.text-primary #{ midfielders }
+    button(type="button" data-toggle="modal" data-target="#viewLeaguesModal").card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton                        
+        .card-body
+            h5.card-title Attackers
+                span.ml-4.text-primary #{ attackers }

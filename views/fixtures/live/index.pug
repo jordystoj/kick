@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Kick
+        base(href="/")
+        link(rel="stylesheet", href="../stylesheets/dashboard.css")
+        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+        script(src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous")
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+        script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+        link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css")
+
+    body
+        .d-flex.justify-content-between.align-items-center
+            button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white(onclick="addGoal('"+homeTeamId+"')" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Goal
+
+            .row.w-25
+                .col-sm-6.text-center.mx-auto
+                    img(src=homeClub.logo height="100px")
+                .col-sm-6.text-center
+                    .text-center.pt-2(style="height: 23.3vh; border-radius: 0; font-size:3em")= homeTeamGoals.length
+            .row.w-25
+                .col-sm-6.text-center.mx-auto
+                    .text-center.pt-2(style="height: 23.3vh; border-radius: 0; font-size:3em")= awayTeamGoals.length
+                .col-sm-6.text-center
+                    img(src=awayClub.logo height="100px")
+            button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white(onclick="addGoal('"+awayTeamId+"')" style="height: 33.3vh; border-radius: 0; font-size: 1.3em; ") Goal
+        .d-flex.justify-content-start.align-items-center
+            button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white(onclick="addFoul("+homeTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Foul
+            //- button.btn.btn-md.btn-secondary.w-50.font-weight-bold.text-info(style="height: 10vh; border-radius: 0; font-size: 1.3em; ")
+            //- button.btn.btn-md.w-50.font-weight-bold.text-info(style="height: 23.3vh; border-radius: 0; font-size: 1.3em; ")
+            .d-flex.flex-column.align-items-center.w-50
+                .w-100(style="height:10vh; border-radius: 0; background: #eee;")
+                    .d-flex.flex-row.justify-content-center.pt-4
+                        if fixture.status === "N"
+                            span.btn.btn-danger.btn-sm.text-center#startBtn(onclick=`startMatch(${JSON.stringify(fixture._id)})`) Start Match
+                        //- Start timer here
+                        //- if fixture.status === "FH"
+                        span.text-center#clock
+
+                        #halfButton
+                .w-100(style="height:23.3vh; border-radius: 0;")
+            button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white(onclick="addFoul("+awayTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em; ") Foul
+        .d-flex.justify-content-between.align-items-center
+            button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white(onclick="addFoul("+homeTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Substitute
+            button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white(onclick="addOffside("+homeTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Offside
+            button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white(onclick="addOffside("+awayTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Offside
+            button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white(onclick="addFoul("+awayTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Substitute
+
+
+        include ./addGoalModal.pug
+        script.
+            function startMatch(fixtureId) {
+                //- Post to the server that the game has started
+                $.ajax({
+                    url: "/dashboard/fixtures/start/match",
+                    type: "POST",
+                    data: {fixtureId: fixtureId},
+                    dataType: "text",
+                    success: function(res){
+                        clearStartBtn()
+                        updateTime(JSON.parse(res)._id);
+                    }
+                });
+            }
+
+            function clearStartBtn(){
+                $('#startBtn').remove();
+                $('#clock').append(
+                    $('<h1/>', {class: 'text-danger', text: "'"+0})
+                )
+            }
+
+            let elapsed;
+
+            function updateTime(fixtureId) {
+                setInterval(() => {
+                    //- Send a request to update the elapsed time in db
+                    $.ajax({
+                        url: "/dashboard/fixtures/updateTime",
+                        type: "POST",
+                        data: {fixtureId: fixtureId},
+                        success: function(res){
+                            buildClock(res.elasped, res.status, res._id);
+                            elapsed = res.elasped;
+                        }
+                    })
+                }, 1000*10);
+            }
+
+
+
+            //- Build with react dom #Clock
+            function buildClock(elapsed, status, fixtureId){
+                $('#clock').html('');
+                $('#clock').append(
+                    $('<h1/>', {class: 'text-danger', text: "'"+elapsed})
+                );
+
+                if(elapsed >= 2){
+                    $('#clock').html('');
+                    $('#halfButton').html('');
+                    $('#clock').append(
+                        $('<h1/>', {class: 'text-danger', text: "'"+elapsed}),
+                    )
+                    $('#halfButton').append(
+                        $('<button/>', {class: 'btn btn-sm btn-primary', id: 'endFirstHalf', text: "End First Half", onclick: "endFirstHalf("+fixtureId+")"})
+                    )
+                }
+            }
+
+            function endFirstHalf(id) {
+                console.log(id)
+            }
+
+            function addGoal(teamId) {
+                //- Popup modal
+                $('#goalModal').modal('toggle')
+            }
+
+
+
+
+
+

@@ -1,0 +1,137 @@
+include ../navbar
+
+block content
+    .container
+        .d-sm-flex.mt-4.justify-content-between.d-flex-xs-column
+            button(type="button" data-toggle="modal" data-target="#viewPlayersModal").card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton
+                .card-body
+                    h5.card-title View Players
+                        span.ml-4(data-feather='user') 
+            button(type="button" data-toggle="modal" data-target="#viewTeamsModal").card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton
+                .card-body
+                    h5.card-title View Teams
+                        span.ml-4(data-feather='clipboard') 
+            button(type="button" data-toggle="modal" data-target="#viewClubsModal").card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton            
+                .card-body
+                    h5.card-title View Clubs
+                        span.ml-4(data-feather='flag')
+            button(type="button" data-toggle="modal" data-target="#viewLeaguesModal").card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton                        
+                .card-body
+                    h5.card-title View Leagues
+                        span.ml-4(data-feather='layers')
+        
+    .container.mt-4
+        .card
+            .card-header.bg-primary.text-white
+                span.h4 Recent News
+
+                span.float-right.h4 #{ moment().format('ll') }
+            .card-body
+                .row
+                    .col-md-7.mt-3
+                        each post in posts
+                            .d-flex-column
+                                .card.boxShadowCards.w-100.mt-3
+                                    img.card-img-top(height="150px" src=post.thumbnail) 
+                                    .card-body
+                                        h4.card-title #{ post.title }
+                                        p.card-text #{ post.postContent.replace(/(([^\s]+\s\s*){20})(.*)/,"$1…") }
+                                        a.btn.btn-primary(href="/post/"+post._id) Read More
+                    .col-md-1
+                    .col-md-4.mt-4
+                        .d-flex-column
+                            .card
+                                .card-header.bg-white
+                                    h4.card-title Leaderboards
+                                .card-body.p-0
+                                    table.table.table-striped.w-100
+                                        - n = 0;
+                                            while n < clubs.length
+                                                tr
+                                                    td #{n+1 + " " + clubs[n]}
+                                                    - n++
+
+    //- Modals Start Here
+
+    //- View Players Modal
+    .modal#viewPlayersModal
+        .modal-dialog.modal-dialog-scrollable.modal-lg
+            .modal-content
+                //- Modal Header
+                .modal-header
+                    h4.modal-title View Players
+                        span.ml-4(data-feather='user')  
+                    button(type="button" class="close" data-dismiss="modal").actionButton
+                        span.ml-4(data-feather='x')                        
+                .modal-body
+                    p.h4 Find a player
+                    .form-group
+                        .input-group
+                            .input-group-prepend
+                                span.input-group-text Search
+                            input.form-control(type="text" name="player_search" id="player_search" placeholder="Search for a player")
+                    
+                    .row#playersResult
+
+    //- View Players Modal
+    .modal#viewTeamsModal
+        .modal-dialog.modal-dialog-scrollable.modal-lg
+            .modal-content
+                //- Modal Header
+                .modal-header
+                    h4.modal-title View Teams
+                        span.ml-4(data-feather='clipboard')  
+                    button(type="button" class="close" data-dismiss="modal").actionButton
+                        span.ml-4(data-feather='x')                        
+                .modal-body
+                    .form-group
+                        .input-group
+                            .input-group-prepend
+                                span.input-group-text Search
+                            input.form-control(type="text" name="team_search" id="team_search" placeholder="Search for a team")
+                    .row#teamsResult
+
+    //- View Players Modal
+    .modal#viewClubsModal
+        .modal-dialog.modal-dialog-scrollable.modal-lg
+            .modal-content
+                //- Modal Header
+                .modal-header
+                    h4.modal-title View Clubs
+                        span.ml-4(data-feather='flag')  
+                    button(type="button" class="close" data-dismiss="modal").actionButton
+                        span.ml-4(data-feather='x')                        
+                .modal-body
+                    .form-group
+                        .input-group
+                            .input-group-prepend
+                                span.input-group-text Search
+                            input.form-control(type="text" name="club_search" id="club_search" placeholder="Search for a club")
+                    .row#clubsResult
+
+    //- View Players Modal
+    .modal#viewLeaguesModal
+        .modal-dialog.modal-dialog-scrollable.modal-lg
+            .modal-content
+                //- Modal Header
+                .modal-header
+                    h4.modal-title View Teams
+                        span.ml-4(data-feather='clipboard')  
+                    button(type="button" class="close" data-dismiss="modal").actionButton
+                        span.ml-4(data-feather='x')                        
+                .modal-body
+                    .form-group
+                        .input-group
+                            .input-group-prepend
+                                span.input-group-text Search
+                            input.form-control(type="text" name="league_search" id="league_search" placeholder="Search for a team")
+                    .row#leaguesResult
+                        
+                                        
+    script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
+    script(src="../../scripts/playerSearch.js")
+    script(src="../../scripts/teamSearch.js")
+    script(src="../../scripts/clubSearch.js")
+    script(src="../../scripts/leagueSearch.js")
+    script.
+        feather.replace()

@@ -1,0 +1,23 @@
+p.h4 2020 Leagues
+    table.table.table-striped.w-100.mt-4
+        thead
+            tr
+                td.text-center Name
+                td.text-center Age
+                td.text-center Gender
+                td.text-center State
+                td.text-center Year
+                td.text-center Active
+                td.text-center
+        tbody
+            each league in leagues
+                tr
+                    td.text-center.text-uppercase= league.leagueName
+                    td.text-center.text-capitalize= league.age
+                    td.text-center.text-capitalize= league.gender
+                    td.text-center.text-uppercase= league.state
+                    td.text-center= league.year
+                    if league.active
+                        td.my-0.py-0.h2.text-success.text-center &bull;
+                    td.text-center
+                        a.my-0.btn.btn-sm.btn-warning(href="/dashboard/leagues/edit/"+league._id) Edit

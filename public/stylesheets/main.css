@@ -1,0 +1,123 @@
+#navbarNav {
+    height: 100%;
+    background: #eee;
+    z-index: 10;
+}
+
+.boxShadowCards {
+    -webkit-box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.3);
+    color: black !important;
+}
+
+.actionButton:focus {
+    outline: none;
+}
+
+.card-img, .card-img-top {
+    object-fit: cover;
+    object-position: center;
+}
+
+.club-admin-info-title a {
+    background: #00c6ff;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #0072ff, #00c6ff);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #0072ff, #00c6ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.blueGradient {
+    background: #00c6ff;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #0072ff, #00c6ff);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #0072ff, #00c6ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.club-admin-info-title p {
+    font-size: 1.2em;
+}
+
+.club-admin-organisation h1 {
+    padding-left: 15px;
+}
+
+
+@media only screen and (min-width: 992px){
+    .club-admin-info-title {
+        padding-top: 10vh;
+        padding-left: 3.7vw;
+        height: 80vh;
+    }
+
+    .club-admin-info-title h1 {
+        font-size: 2.7em;
+    }
+
+    .section2 {
+        height: 68vh;
+        background: #eee;
+    }
+
+    .club-admin-organisation {
+        padding-top: 10vh;
+        padding-left: 3.7vw;
+    }
+
+    .club-admin-organisation h1 {
+        font-size: 2.5em;
+        letter-spacing: 2px;
+    }
+
+    .club-admin-organisation p {
+        font-size: 1.2em;
+        color: #999
+    }
+
+    .section3 {
+        height: 68vh;
+    }
+
+    .section4 {
+        height: 68vh;
+        background: #eee;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .club-admin-info-title {
+        padding-top: 10vh;
+        padding-left: 6.8vw;
+        padding-right: 6.8vw;
+    }
+
+    .club-admin-info-title h1 {
+        font-size: 1.8em;
+    }
+
+    .club-admin-info-title a{
+        width: 100% !important;
+    }
+
+    .club-admin-organisation {
+        padding-top: 10vh;
+        padding-left: 6.8vw;
+        padding-right: 6.8vw;
+    }
+
+    .section1 {
+        height: 88vh;
+    }
+
+    .section2 {
+        height: 88vh;
+        background: #eee;
+    }
+
+    .section3 {
+        height: 100vh;
+    }
+    
+    .section4 {
+        height: 100vh;
+        background: #eee;
+    }
+}

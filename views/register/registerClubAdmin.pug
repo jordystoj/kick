@@ -1,0 +1,54 @@
+include ../navbar
+
+block content
+    .container.mt-5
+        .row
+            .col-md-2
+
+            .col-md-8
+                .card.boxShadowCards
+                    article.card-body
+                        h4.card-title.text-center.mb-4.mt-1 Register
+                        hr
+                        form(action="/register" method="post")
+
+                            .form-group
+                                label() First Name
+                                input.form-control(name='firstName' placeholder='John' type='text')
+
+                            .form-group
+                                label() Last Name       
+                                input.form-control(name='lastName' placeholder='Smith' type='text')
+
+                            .form-group
+                                label() Email
+                                input.form-control(name='email' placeholder='Email or login' type='email')
+
+                            .form-group
+                                label() Password
+                                input.form-control(name='password' placeholder='******' type='password')
+
+                            .form-group
+                                label() Mobile Number
+                                input.form-control(name='mobileNumber' placeholder='0400 000 000' type='text')
+
+                            .form-group
+                                label() D.O.B.
+                                input.form-control(name='dateOfBirth' type='date')
+
+                            .form-group
+                                label() Club
+                                select(class="custom-select" class="form-control" name="club")
+                                    option(selected) Select Club
+                                        each club in clubs
+                                            option(value=club._id)= club.clubName
+
+                            .form-group
+                                label() Year Started
+                                input.form-control(name='yearStarted' type='text' placeholder="2014")
+
+                            input(type="hidden", name="admin" value="1")
+                        
+                            .form-group
+                                button.btn.btn-primary.btn-block(type='submit')  Register
+            .col-md-2

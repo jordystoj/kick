@@ -1,0 +1,30 @@
+h2.text-center Add Team
+br 
+div(class="row center")
+    div(class="col-sm-12 formPositioning")
+        div(class="mb-3 mx-auto loginCards" style="max-width: 90%;")
+            div(class="mx-auto")
+                form(action="/dashboard/teams/add", method="post" style="max-width: 100%")
+                    div(class="row")
+                        div(class="col-md-3")
+
+                        div(class="col-md-6")
+                            //- Add league
+                            div(class="form-group")
+                                label() Select League
+                                select(class="custom-select" name="leagueid" id="leagueId")
+                                    option(selected) Select League
+                                        each league in leagues
+                                            option(value=league._id) #{league.leagueName.toUpperCase() +  " " + league.gender.toUpperCase() +  " " + league.age.toUpperCase() + " " + league.state.toUpperCase()}
+
+                            //- Add Club
+                            div(class="form-group")
+                                label() Club
+                                select(class="custom-select" name="clubid")
+                                    option(selected) Select Club
+                                        each club in clubs
+                                            option(value=club._id) #{club.clubName}
+                                                
+                            button.btn.btn-success.btn-lg.w-100.mt-4(type="submit") Submit
+
+                        div(class="col-md-3")

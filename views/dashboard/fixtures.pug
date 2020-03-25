@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Kick
+        base(href="/")
+        link(rel="stylesheet", href="../stylesheets/dashboard.css")
+        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+        script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+        script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+        link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css")
+
+    body
+
+        nav.navbar.navbar-dark.fixed-top.bg-dark.flex-md-nowrap.p-0.shadow
+            a.navbar-brand.col-sm-3.col-md-2.mr-0(href='#') Kick.com
+            input.form-control.form-control-dark.w-100(type='text' placeholder='Search' aria-label='Search')
+            ul.navbar-nav.px-3
+                li.nav-item.text-nowrap
+                    a.nav-link(href='#') Sign out
+            
+        .container-fluid
+            .row
+                nav.col-md-2.d-none.d-md-block.bg-light.sidebar
+                    .sidebar-sticky
+                        ul.nav.flex-column
+                            li.nav-item
+                                a.nav-link(href='/dashboard')
+                                    span(data-feather='home') 
+                                    span Dashboard
+                            
+                            li.nav-item
+                                a.nav-link(href='/dashboard/players')
+                                    span(data-feather='users') 
+                                    span Players
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/teams')
+                                    span(data-feather='clipboard') 
+                                    span Teams
+
+                            li.nav-item
+                                a.nav-link.active(href='/dashboard/fixtures')
+                                    span(data-feather='calendar') 
+                                    span Fixtures
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/leagues')
+                                    span(data-feather='layers') 
+                                    span Leagues
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/clubs')
+                                    span(data-feather='flag') 
+                                    span Clubs
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/inbox')
+                                    span(data-feather='inbox') 
+                                    span Inbox
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/verify')
+                                    span(data-feather='award') 
+                                    span Verify
+
+                            
+                        h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
+                            span Actions
+                            a.d-flex.align-items-center.text-muted(href='#')
+                                span(data-feather='plus-circle')
+                        if check == "add"
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link.active(href='/dashboard/fixtures/add')
+                                        span(data-feather='plus')
+                                        span Add Fixture
+                                
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/fixtures/edit')
+                                        span(data-feather='check')
+                                        span Edit Fixture
+                        else if check == "edit"
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/fixtures/add')
+                                        span(data-feather='plus')
+                                        span Add Fixture
+                                
+                                li.nav-item
+                                    a.nav-link.active(href='/dashboard/fixtures/edit')
+                                        span(data-feather='check')
+                                        span Edit Fixture
+                        else 
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/fixtures/add')
+                                        span(data-feather='plus')
+                                        span Add Fixture
+                                
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/fixtures/edit')
+                                        span(data-feather='check')
+                                        span Edit Fixture
+                    
+                main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+                    .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+                        h1.h2 Fixtures
+                        .btn-toolbar.mb-2.mb-md-0
+                            .btn-group.mr-2
+                                button.btn.btn-sm.btn-outline-secondary Share
+                                button.btn.btn-sm.btn-outline-secondary Export
+                            
+                            button.btn.btn-sm.btn-outline-secondary.dropdown-toggle
+                                span(data-feather='calendar')
+                                span This week
+
+                    .row
+                        each fixture, i in fixtures
+                            .col-md-6.col-sm-12
+                                .card.boxShadowCards.mt-4
+                                    .card-title
+                                        .card-header= fixture.venue
+                                    .card-body
+                                        .row
+                                            .col-md-5.col-sm-12.text-center
+                                                img(src=homeClubs[i].logo height="100px")
+                                            .col-md-2.col-sm-12.text-center.mt-4 VS
+                                            .col-md-5.col-sm-12.text-center
+                                                img(src=awayClubs[i].logo height="100px")
+                                    .card-footer.text-center
+                                        a.btn.btn-primary.btn-md(href="/dashboard/fixtures/live/update/"+fixture._id) Update Live
+
+                    if check == "add"
+                        include ../dashboard/fixtureForms/addForm.pug
+                    else if check == "edit"
+                        include ../dashboard/fixtureForms/editForm.pug
+                    else 
+                        include ../dashboard/fixtureForms/index.pug
+                    
+
+    script(src="../scripts/fixtures.js")
+    script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
+    script.
+        feather.replace()

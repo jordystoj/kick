@@ -1,0 +1,101 @@
+include ../navbar
+
+block content
+    .section1
+        .container
+
+            .club-admin-info-title
+                h1.text-left.mt-4.font-weight-bold Prelist
+                //- p.text-left.mt-4 We realise how important a club administrator is to a club and also to all the teams in that club <br> They not only help out with everything around the club but they also spend most of their weekends watching all the games <br> This is why we found it necessary to integrate features within <span class="text-primary">Kick.com</span> to help out the hard workers behind the scenes
+                p.text-left.mt-5 Tools built by <span class="text-primary">Kick.com</span> for club administrators to make the management of a club and all the teams within much easier
+                a.my-5.btn.btn-lg.w-50.text-white.boxShadowCards(href="/register/clubadmin") Prelist Now
+
+    .section2  
+        .container
+            .club-admin-organisation
+                .row
+                    h1.text-left.mt-4.font-weight-bold Organisation
+                .row.mt-4
+                    .col-md-4.col-sm-12
+                        div
+                            h4.text-left.mt-4.font-weight-bold Organise teams
+                            p Organise teams before each fixture <br> into positions and formations
+
+                    .col-md-4.col-sm-12
+                        div
+                            h4.text-left.mt-4.font-weight-bold Track player progress
+                            p Player data from fixtures is updated <br> live and can be easily monitored
+
+                    .col-md-4.col-sm-12
+                        div
+                            h4.text-left.mt-4.font-weight-bold Communication
+                            p Make it easier to organise your club <br> through the use of team chats
+
+    .section3  
+        .container
+            .club-admin-organisation
+                .row
+                    h1.text-left.mt-4.font-weight-bold Visualise and capture, <br> statistics and data
+                .row.mt-4
+                    .col-md-4.col-sm-12
+                        div
+                            h4.text-left.mt-4.font-weight-bold Fixtures
+                            p Fixtures are updated live by you match<br> events added while watching the game
+
+                    .col-md-4.col-sm-12
+                        div
+                            h4.text-left.mt-4.font-weight-bold Players
+                            p Player data is collected and tracked.<br> Allowing for easy monitoring 
+                    
+                    .col-md-4.col-sm-12
+                        div
+                            h4.text-left.mt-4.font-weight-bold Leagues
+                            p Easy to view leagues from all ages<br> Track teams progress in league <br> through the entire season
+
+
+    .section4 
+        .container
+            .club-admin-organisation
+                .row
+                    h1.text-left.mt-4.font-weight-bold Information and <br> communication
+                .row.mt-4
+                    .col-md-4.col-sm-12
+                        div
+                            h4.text-left.mt-4.font-weight-bold Chat Rooms
+                            p Live chat rooms between club admin,<br> teams and parents
+
+                    .col-md-4.col-sm-12
+                        div
+                            h4.text-left.mt-4.font-weight-bold Fixtures
+                            p All the seasonal and final fixtures<br> are up and easy to view. This <br> includes times, dates and  addresses
+                            
+                    .col-md-4.col-sm-12
+                        div
+                            h4.text-left.mt-4.font-weight-bold Leagues
+                            p Leagues have all the relevant info.<br> Integrated into your dashbaord
+
+block footer 
+    include ../partials/footer.pug
+        //- .row.mt-5.mx-auto
+            //- .col-md-4.col-sm-12.text-center
+        //-         div.mt-5
+        //-             span(data-feather="users" height="100px" width="100px")
+        //-             br
+        //-             div.mt-4.text-justify As a club administrator organisation is key. With Kick.com you are now able to organise your teams to into any way you like. You can also keep track of how well players inside of the club are doing.
+        //-     .col-md-4.col-sm-12.text-center
+        //-         div.mt-5
+        //-             span(data-feather="activity" height="100px" width="100px")
+        //-             br
+        //-             div.mt-4.text-justify In today's world it is important to have stats, but tools are either very expernsive or very obscure. At Kick.com keeping a record of stats is as easy as watching the game. It is then even easier viewing them and helping them to better improve the players
+        //-     .col-md-4.col-sm-12.text-center
+        //-         div.mt-5
+        //-             span(data-feather="calendar" height="100px" width="100px")
+        //-             br
+        //-             div.mt-4.text-justify Planning out a gameweek is a difficult task. Now you are able to easily view fixtures and results. You are also able to pick teamsheets, formations and receive live updates from the games. Once the game is complete, player data and leaderboards are updated instaniosuly
+
+        //- .row.mt-5
+        //-     a.mt-4.mx-auto.btn.btn-lg.btn-success.w-50(href="/register/clubadmin") Register As Club Admin
+    script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
+    script.
+        feather.replace()
+    

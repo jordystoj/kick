@@ -1,0 +1,67 @@
+h2.text-center Add Player
+br 
+div(class="row center")
+    div(class="col-sm-12 formPositioning")
+        div(class="mb-3 mx-auto loginCards" style="max-width: 90%;")
+            div(class="mx-auto")
+                form(action="/dashboard/players/add", method="post" style="max-width: 100%")
+                    div(class="row")
+                        div(class="col-md-6")
+                            div(class="form-group")
+                                label() First Name
+                                input(type="text" class="form-control" name="firstName" placeholder="First Name")
+                            div(class="form-group")
+                                label() Last Name
+                                input(type="text" class="form-control" name="lastName" placeholder="Last Name")
+                            div(class="form-group")
+                                label() Date Of Birth
+                                input(type="date" class="form-control" name="dob" )
+                            div(class="form-group")
+                                label() Photo URL
+                                input(type="text" class="form-control" name="photo" placeholder="Enter Photo URL")
+                                                    
+                            div(class="form-group")
+                                label() Position
+                                select(class="custom-select" name="pos")
+                                    option(selected) Select Pos
+                                        option(value="forward") Forward
+                                        option(value="midfield") Midfield
+                                        option(value="defence") Defence
+                                        option(value="goalkeeper") Goalkeeper
+                                                                
+                            div(class="form-group")
+                                label() Preferred Foot
+                                select(class="custom-select" name="preferredFoot")
+                                    option(selected) Select Foot
+                                        option(value="right") Right
+                                        option(value="left") Left
+                                                                
+                                                    
+                        div(class="col-md-6")
+                            div(class="form-group")
+                                label() Nationality
+                                select(class="custom-select" name="nationality")
+                                    option(selected) Select Country
+                                        each country in countryList
+                                            option(value=country) #{country}
+                                                                
+                            div(class="form-group")
+                                label() Select Team
+                                select(class="custom-select" name="team")
+                                    option(selected) Select Team
+                                        each team in teams
+                                            option(value=team._id) #{team.teamName}
+
+                            div(class="form-group")
+                                label() Height (cm)
+                                input(type="number" class="form-control" name="height" placeholder="172")
+
+                            div(class="form-group")
+                                label() Weight (kg)
+                                input(type="number" class="form-control" name="weight" placeholder="80")
+                                                    
+                            .form-group
+                                label() Jersey Number
+                                input(type="number" class="form-control" name="jersey" placeholder="4")
+
+                    button.btn.btn-success.btn-lg.w-100(type="submit") Submit

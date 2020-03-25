@@ -1,0 +1,61 @@
+div(class="row center")
+    p.h4.mx-auto Edit League
+    div(class="col-sm-12 formPositioning")
+        div(class="mb-3 mx-auto loginCards" style="max-width: 90%;")
+            div(class="mx-auto")
+                form(action="/dashboard/leagues/edit/"+league._id, method="post" style="max-width: 100%")
+                    div(class="row")
+                        .col-md-3
+                        div(class="col-md-6")
+                                                    
+                            div(class="form-group")
+                                label() League Name
+                                select(class="custom-select" name="leagueName" required)
+                                    option(selected)= league.leagueName
+                                    option(value="npl 1") NPL 1
+                                    option(value="npl 2") NPL 2
+                                    option(value="npl 3") NPL 3
+                                                    
+                            div(class="form-group")
+                                label() Gender
+                                select(class="custom-select" name="gender" required)
+                                    option(selected)= league.gender
+                                    option(value="womens") Womens
+                                    option(value="mens") Mens
+                                    option(value="youth") Youth
+                                    //- Youth now have blue and white within the actual league
+
+                                div(class="form-group")
+                                    label() Age
+                                    select(class="custom-select" name="age" required)
+                                        option( selected)= league.age
+                                        option(value="first") First Grade
+                                        option(value="reserves") Reserve Grade
+                                        option(value="U20") U20
+                                        option(value="U18") U18
+                                        option(value="U17") U17
+                                        option(value="U16") U16
+                                        option(value="U15") U15
+                                        option(value="U14") U14
+                                        option(value="U13") U13
+                                                        
+                                div(class="form-group")
+                                    label() State
+                                    select(class="custom-select" name="state" required)
+                                        option.text-uppercase(selected)= league.state
+                                            option(value="nsw") NSW
+                                            option(value="qld") QLD
+
+                                .form-group.text-center
+                                    label Active
+                                    br
+                                    label.switch
+                                        if league.active == true
+                                            input.checkbox(type="checkbox", name="active" checked)
+                                        else 
+                                            input.checkbox(type="checkbox", name="active")
+                                        span.slider.round
+
+                                button(type="submit" class="w-100 btn btn-primary") Submit
+
+                        .col-md-3

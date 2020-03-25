@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Kick
+        base(href="/")
+        link(rel="stylesheet", href="../stylesheets/dashboard.css")
+        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+        script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+        script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+        link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css")
+
+    body
+
+        nav.navbar.navbar-dark.fixed-top.flex-md-nowrap.p-0(style="background:"+club.primaryColor)
+            a.navbar-brand.col-sm-3.col-md-2.mr-0(href='#') Kick.com
+            input.form-control.form-control-dark.w-100(type='text' placeholder='Search' aria-label='Search')
+            ul.navbar-nav.px-3
+                li.nav-item.text-nowrap(style="background:"+club.primaryColor)
+                    a.nav-link(href='/logout') Sign out
+            
+        .container-fluid
+            .row
+                nav.col-md-2.d-none.d-md-block.bg-light.sidebar
+                    .sidebar-sticky
+                        ul.nav.flex-column
+                            li.nav-item
+                                a.nav-link.active(href='/clubs/dashboard')
+                                    span(data-feather='home') 
+                                    span Dashboard
+                            
+                            li.nav-item
+                                a.nav-link(href='/clubs/dashboard/players')
+                                    span(data-feather='users') 
+                                    span Players
+
+                            li.nav-item
+                                a.nav-link(href='/clubs/dashboard/teams')
+                                    span(data-feather='clipboard') 
+                                    span Teams
+
+                            li.nav-item
+                                a.nav-link(href='/clubs/dashboard/fixtures')
+                                    span(data-feather='calendar') 
+                                    span Fixtures
+
+                            li.nav-item
+                                a.nav-link(href='/clubs/dashboard/leagues')
+                                    span(data-feather='layers') 
+                                    span Leagues
+
+                            li.nav-item
+                                a.nav-link(href='/clubs/dashboard/inbox')
+                                    span(data-feather='inbox') 
+                                    span Inbox
+                
+                main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+                    .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+                        h1= club.clubName
+                        img(src=club.logo height="80px")
+                    
+                    .d-sm-flex.mt-4.justify-content-between.d-flex-xs-column
+                        a().card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton
+                            .card-body
+                                h5.card-title Number of players
+                                    span.ml-4= numberOfPlayers
+                        
+                        a().card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton
+                            .card-body
+                                h5.card-title Number of teams
+                                    span.ml-4= numberOfTeams
+                        
+                        a().card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton
+                            .card-body
+                                h5.card-title Club championship
+                                    span.ml-4 0
+
+    
+    script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
+    script.
+        feather.replace()

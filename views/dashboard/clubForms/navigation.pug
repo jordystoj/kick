@@ -1,0 +1,85 @@
+nav.navbar.navbar-dark.fixed-top.bg-dark.flex-md-nowrap.p-0.shadow
+    a.navbar-brand.col-sm-3.col-md-2.mr-0(href='#') Kick.com
+    input.form-control.form-control-dark.w-100(type='text' placeholder='Search' aria-label='Search')
+    ul.navbar-nav.px-3
+        li.nav-item.text-nowrap
+            a.nav-link(href='#') Sign out
+            
+.container-fluid
+    .row
+        nav.col-md-2.d-none.d-md-block.bg-light.sidebar
+            .sidebar-sticky
+                ul.nav.flex-column
+                    li.nav-item
+                        a.nav-link(href='/dashboard')
+                            span(data-feather='home') 
+                            span Dashboard
+                            
+                    li.nav-item
+                        a.nav-link(href='/dashboard/players')
+                            span(data-feather='users') 
+                            span Players
+
+                    li.nav-item
+                        a.nav-link(href='/dashboard/teams')
+                            span(data-feather='clipboard') 
+                            span Teams
+
+                    li.nav-item
+                        a.nav-link(href='/dashboard/fixtures')
+                            span(data-feather='calendar') 
+                            span Fixtures
+
+                    li.nav-item
+                        a.nav-link(href='/dashboard/leagues')
+                            span(data-feather='layers') 
+                            span Leagues
+
+                    li.nav-item
+                        a.nav-link.active(href='/dashboard/clubs')
+                            span(data-feather='flag') 
+                            span Clubs
+
+                    li.nav-item
+                        a.nav-link(href='/dashboard/inbox')
+                            span(data-feather='inbox') 
+                            span Inbox
+
+                            
+                h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
+                    span Actions
+                    a.d-flex.align-items-center.text-muted(href='#')
+                        span(data-feather='plus-circle')
+                if check == "add"
+                    ul.nav.flex-column.mb-2
+                        li.nav-item
+                            a.nav-link.active(href='/dashboard/clubs/add')
+                                span(data-feather='user-plus')
+                                span Add Club
+                                
+                        li.nav-item
+                                a.nav-link(href='/dashboard/clubs/edit')
+                                span(data-feather='user-check')
+                                span Edit Club
+                else if check == "edit"
+                    ul.nav.flex-column.mb-2
+                        li.nav-item
+                            a.nav-link(href='/dashboard/clubs/add')
+                                span(data-feather='user-plus')
+                                span Add Club
+                                
+                        li.nav-item
+                            a.nav-link.active(href='/dashboard/clubs/edit')
+                                span(data-feather='user-check')
+                                span Edit Club
+                else 
+                    ul.nav.flex-column.mb-2
+                        li.nav-item
+                            a.nav-link(href='/dashboard/clubs/add')
+                                span(data-feather='user-plus')
+                                span Add Club
+                                
+                        li.nav-item
+                            a.nav-link(href='/dashboard/clubs/edit')
+                                span(data-feather='user-check')
+                                span Edit Club

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Kick
+        base(href="/")
+        link(rel="stylesheet", href="../stylesheets/dashboard.css")
+        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+        script(src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous")
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+        script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+        link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css")
+
+    body
+
+        nav.navbar.navbar-dark.fixed-top.bg-dark.flex-md-nowrap.p-0.shadow
+            a.navbar-brand.col-sm-3.col-md-2.mr-0(href='#') Kick.com
+            input.form-control.form-control-dark.w-100(type='text' placeholder='Search' aria-label='Search')
+            ul.navbar-nav.px-3
+                li.nav-item.text-nowrap
+                    a.nav-link(href='#') Sign out
+            
+        .container-fluid
+            .row
+                nav.col-md-2.d-none.d-md-block.bg-light.sidebar
+                    .sidebar-sticky
+                        ul.nav.flex-column
+                            li.nav-item
+                                a.nav-link(href='/dashboard')
+                                    span(data-feather='home') 
+                                    span Dashboard
+                            
+                            li.nav-item
+                                a.nav-link(href='/dashboard/players')
+                                    span(data-feather='users') 
+                                    span Players
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/teams')
+                                    span(data-feather='clipboard') 
+                                    span Teams
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/fixtures')
+                                    span(data-feather='calendar') 
+                                    span Fixtures
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/leagues')
+                                    span(data-feather='layers') 
+                                    span Leagues
+
+                            li.nav-item
+                                a.nav-link.active(href='/dashboard/clubs')
+                                    span(data-feather='flag') 
+                                    span Clubs
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/inbox')
+                                    span(data-feather='inbox') 
+                                    span Inbox
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/verify')
+                                    span(data-feather='award') 
+                                    span Verify
+
+                            
+                        h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
+                            span Actions
+                            a.d-flex.align-items-center.text-muted(href='#')
+                                span(data-feather='plus-circle')
+                        if check == "add"
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link.active(href='/dashboard/clubs/add')
+                                        span(data-feather='user-plus')
+                                        span Add Club
+                                
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/edit')
+                                        span(data-feather='user-check')
+                                        span Edit Club
+                        else if check == "edit"
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/add')
+                                        span(data-feather='user-plus')
+                                        span Add Club
+                                
+                                li.nav-item
+                                    a.nav-link.active(href='/dashboard/clubs/edit')
+                                        span(data-feather='user-check')
+                                        span Edit Club
+                        else 
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/add')
+                                        span(data-feather='user-plus')
+                                        span Add Club
+                                
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/edit')
+                                        span(data-feather='user-check')
+                                        span Edit Club
+                                
+                    
+                main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+                    .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+                        h1.h2 Clubs
+                        .btn-toolbar.mb-2.mb-md-0
+                            .btn-group.mr-2
+                                button.btn.btn-sm.btn-outline-secondary Share
+                                button.btn.btn-sm.btn-outline-secondary Export
+                            
+                            button.btn.btn-sm.btn-outline-secondary.dropdown-toggle
+                                span(data-feather='calendar')
+                                span This week
+                
+                    if check == "add"
+                        include ../dashboard/clubForms/addForm.pug
+                    else if check == "edit"
+                        include ../dashboard/clubForms/editForm.pug
+                    else 
+                        include ../dashboard/clubForms/index.pug                        
+                    
+
+    script(src="../../scripts/dashboardSearch/clubSearch.js")
+    script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
+    script.
+        feather.replace()

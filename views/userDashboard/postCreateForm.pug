@@ -1,0 +1,39 @@
+include ../navbar
+
+block content
+    .container
+        .card.boxShadowCards.mt-4
+            .card-header.bg-white
+                .card-title
+                    p.h4 Create New Post
+            .card-content
+                .container
+                    form(action="/user/posts/create", method="post" id="newPostForm")
+                        .row
+                            .col
+                                .form-group.mt-3
+                                    label.h5(for="titleInput") Title
+                                    input.form-control.col-xs-12(type="text", name="title" id="titleInput")
+
+                            .col
+                                .form-group.mt-3
+                                    label.h5(for="thumbnailInput") Thumbnail
+                                        span.ml-2(data-feather='file-plus')
+                                    //- input.form-control.col-xs-12(type="file", accept="image/*", name="thumbnail" id="thumbnailInput")
+                                    input.form-control.col-xs-12(type="text", name="thumbnail" id="thumbnailInput" placeholder="image url")
+                                    
+                        .row
+                            .col
+                                .form-group.mt-3
+                                    label.h5(for="postContent") Write
+                                        span.ml-2(data-feather="feather")
+                                    br
+                                    textarea(name="postContent" id="postContent" form="newPostForm" style="width: 100% !important; height: 35vh !important; border: 1px solid #ccc")
+
+                        .row
+                            .col
+                                input.btn.btn-lg.btn-success.mx-auto.my-3.w-100(type="submit", value="Submit")
+                            
+    script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
+    script.
+        feather.replace()

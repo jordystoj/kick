@@ -1,0 +1,95 @@
+extends partials/header 
+
+block navbar
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        
+        if !user
+            a.navbar-brand(href='/') Kick.com
+        else
+            a.navbar-brand(href="/user/dashboard") Kick.com
+        button.hamburger.hamburger--collapse.navbar-toggler(type="button" data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation')
+            span.hamburger-box
+                span.hamburger-inner
+        div.collapse.navbar-collapse
+            if !user
+                ul.navbar-nav
+                    li.nav-item
+                        a.nav-link(href='/') Home
+                    li.nav-item
+                        a.nav-link(href='/about') About
+                    li.nav-item
+                        a.nav-link(href='/howitworks') Contact Us
+                    //- li.nav-item
+                    //-     a.nav-link(href='/howitworks') Players
+                    //- li.nav-item
+                    //-     a.nav-link(href='/howitworks') Teams
+                    //- li.nav-item
+                    //-     a.nav-link(href='/howitworks') Leagues
+                    //- li.nav-item
+                    //-     a.nav-link(href='/howitworks') Fixtures
+                    //- li.nav-item
+                    //-     a.nav-link(href='/howitworks') Results
+                    //- li.nav-item
+                    //-     a.nav-link(href='/howitworks') Clubs
+
+            else 
+                ul.navbar-nav
+                    li.nav-item
+                        a.nav-link(href='/user/dashboard') Home
+                    li.nav-item
+                        a.nav-link(href='/user/about') About
+                    li.nav-item
+                        a.nav-link(href='/user/contactus') Contact Us
+                    li.nav-item
+                        a.nav-link(href='/user/posts') Posts
+                    li.nav-item
+                        a.nav-link(href='/user/profile') Your Profile
+            ul.navbar-nav.ml-auto
+                if user
+                    a.nav-link Welcome Back, #{user.firstName}
+                    a(href="/logout" style="border-radius:30px; width: 100px;").nav-link Logout
+                else
+                    a.mr-auto.nav-link.btn.btn-warning.btn-md.text-white(href='/signin' style="border-radius: 30px; width: 100px") Sign in 
+    
+    nav#openNav.navbar.navbar-light.bg-light.px-0
+        div#navbarNav.collapse.navbar-collapse
+            
+            ul.navbar-nav.my-3(style="text-align:center; color: #fff;")
+                
+                if !user
+                    li.nav-item.active.my-3.h3
+                        a.nav-link(href='/') Home
+                    li.nav-item.active.my-3.h3
+                        a.nav-link(href='/about') About
+                    li.nav-item.active.my-3.h3
+                        a.nav-link(href='/howitworks') Contact Us
+                    
+                    a.my-3.h3.mx-auto.nav-link.btn.btn-warning.btn-md.text-white(href='/signin' style="border-radius: 30px; width: 100px") Sign in 
+                else
+                    li.nav-item.active.my-3.h3
+                        a.nav-link(href='/user/dashboard') Home
+                    li.nav-item.my-3.h3
+                        a.nav-link(href='/user/about') About
+                    li.nav-item.my-3.h3
+                        a.nav-link(href='/user/contactus') Contact Us
+                    li.nav-item.my-3.h3
+                        a.nav-link(href='/user/posts') Posts
+                    li.nav-item.my-3.h3
+                        a.nav-link(href='/user/profile') Your Profile
+                    a(href="/logout" style="border-radius: 30px;").nav-link.my-3.h3.btn.btn-danger.w-50.mx-auto.text-white Logout
+                    
+                    
+
+    
+    script.
+        var $hamburger = $(".hamburger");
+        var $collapsedNav = $("#navbarNav");
+        $hamburger.on("click", function(e) {
+            $hamburger.toggleClass("is-active");
+            // Do something else, like open/close menu
+
+        });
+        
+
+        
+        

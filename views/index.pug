@@ -1,0 +1,65 @@
+include navbar
+
+block content
+    .container
+        .d-sm-flex.mt-4.justify-content-between.d-flex-xs-column
+            a(href="/").card.boxShadowCards.text-decoration-none.mt-3.text-center
+                .card-body
+                    h5.card-title View Players
+                        span.ml-4(data-feather='user') 
+            a(href="/").card.boxShadowCards.text-decoration-none.mt-3.text-center
+                .card-body
+                    h5.card-title View Teams
+                        span.ml-4(data-feather='clipboard') 
+            a(href="/").card.boxShadowCards.text-decoration-none.mt-3.text-center
+                .card-body
+                    h5.card-title View Clubs
+                        span.ml-4(data-feather='flag')
+            a(href="/").card.boxShadowCards.text-decoration-none.mt-3.text-center
+                .card-body
+                    h5.card-title View Leagues
+                        span.ml-4(data-feather='layers')
+        
+    .container.mt-4
+        .card
+            .card-header.bg-primary.text-white
+                span.h4 Recent News
+
+                span.float-right.h4 #{ moment().format('ll') }
+            .card-body
+                .row
+                    .col-md-7.mt-3
+                        .d-flex-column
+                            .card.boxShadowCards.w-100
+                                img.card-img-top(height="150px" src="https://mens.nplnsw.com.au/wp-content/uploads/sites/5/2017/03/2019083001_JN_4345_5D0F543ECB81B22795B0664E0315C982-2600x700_c.jpg") 
+                                .card-body
+                                    h4.card-title Article Title
+                                    p.card-text Breif statement from the actual post itself
+                                    a.btn.btn-primary(href="#") Read More
+                            .card.boxShadowCards.w-100.mt-3
+                                img.card-img-top(height="150px" src="https://mens.nplnsw.com.au/wp-content/uploads/sites/5/2017/03/2019083001_JN_4345_5D0F543ECB81B22795B0664E0315C982-2600x700_c.jpg") 
+                                .card-body
+                                    h4.card-title Article Title
+                                    p.card-text Breif statement from the actual post itself
+                                    a.btn.btn-primary(href="#") Read More
+                    .col-md-1
+                    .col-md-4.mt-4
+                        .d-flex-column
+                            .card
+                                .card-header.bg-white
+                                    h4.card-title Leaderboards
+                                .card-body.p-0
+                                    table.table.table-striped.w-100
+                                        - n = 0;
+                                            while n < clubs.length
+                                                tr
+                                                    td #{n+1 + " " + clubs[n]}
+                                                    - n++
+                                        
+
+block footer
+    include partials/footer.pug
+
+    script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
+    script.
+        feather.replace()

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Kick
+        link(rel="stylesheet", href="../stylesheets/dashboard.css")
+        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+        script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+        script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+        link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css")
+
+    body
+
+        nav.navbar.navbar-dark.fixed-top.bg-dark.flex-md-nowrap.p-0.shadow
+            a.navbar-brand.col-sm-3.col-md-2.mr-0(href='#') Kick.com
+            input.form-control.form-control-dark.w-100(type='text' placeholder='Search' aria-label='Search')
+            ul.navbar-nav.px-3
+                li.nav-item.text-nowrap
+                    a.nav-link(href='/logout') Sign out
+            
+        .container-fluid
+            .row
+                nav.col-md-2.d-none.d-md-block.bg-light.sidebar
+                    .sidebar-sticky
+                        ul.nav.flex-column
+                            li.nav-item
+                                a.nav-link.active(href='/dashboard')
+                                    span(data-feather='home') 
+                                    span Dashboard
+                            
+                            li.nav-item
+                                a.nav-link(href='/dashboard/players')
+                                    span(data-feather='users') 
+                                    span Players
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/teams')
+                                    span(data-feather='clipboard') 
+                                    span Teams
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/fixtures')
+                                    span(data-feather='calendar') 
+                                    span Fixtures
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/leagues')
+                                    span(data-feather='layers') 
+                                    span Leagues
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/clubs')
+                                    span(data-feather='flag') 
+                                    span Clubs
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/inbox')
+                                    span(data-feather='inbox') 
+                                    span Inbox
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/verify')
+                                    span(data-feather='award') 
+                                    span Verify
+
+                            
+                        //- h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
+                            span Saved reports
+                            a.d-flex.align-items-center.text-muted(href='#')
+                                span(data-feather='plus-circle')
+                        //- ul.nav.flex-column.mb-2
+                            li.nav-item
+                                a.nav-link(href='#')
+                                    span(data-feather='file-text')
+                                    span Current month
+                            li.nav-item
+                                a.nav-link(href='#')
+                                    span(data-feather='file-text')
+                                    span Last quarter
+                    
+                main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+                    .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+                        h1.h2 Dashboard
+                        .btn-toolbar.mb-2.mb-md-0
+                            .btn-group.mr-2
+                                button.btn.btn-sm.btn-outline-secondary Share
+                                button.btn.btn-sm.btn-outline-secondary Export
+                            
+                            button.btn.btn-sm.btn-outline-secondary.dropdown-toggle
+                                span(data-feather='calendar')
+                                span This week
+
+                    .row
+                        .col-md-3
+                            .card
+                                .card-body(style="border-left:4px solid #377BFF")
+                                    h4.card-title Fixtures Added :
+                                        span.text-primary.pl-4.font-weight-bold #{fixtureCount}
+
+                        .col-md-3
+                            .card
+                                .card-body(style="border-left:4px solid #28A745")
+                                    h4.card-title Teams Added :
+                                        span.text-success.pl-4.font-weight-bold #{teamCount}
+
+                        .col-md-3
+                            .card
+                                .card-body(style="border-left:4px solid #FBC92B")
+                                    h4.card-title Clubs Added :
+                                        span.text-warning.pl-4.font-weight-bold #{clubCount}
+
+                        .col-md-3
+                            .card
+                                .card-body(style="border-left:4px solid #DC3545")
+                                    h4.card-title Players Added :
+                                        span.text-danger.pl-4.font-weight-bold #{playerCount}
+
+                    hr
+                
+                    h2.mt-2 Quick Links
+                        
+                        .d-sm-flex.mt-4.justify-content-between.d-flex-xs-column
+                            a(href="/dashboard/players/add").card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton
+                                .card-body
+                                    h5.card-title Add New Player
+                                        span.ml-4(data-feather='user') 
+                            a(href="/dashboard/fixtures/edit").card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton
+                                .card-body
+                                    h5.card-title Edit A Fixture
+                                        span.ml-4(data-feather='clipboard') 
+                            a(href="/dashboard/clubs/add").card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton            
+                                .card-body
+                                    h5.card-title Add New Club
+                                        span.ml-4(data-feather='flag')
+                            //- Activity page is seperate. It will show the amount of logins as a graph and also the amount of users.
+                            button(type="button" data-toggle="modal" data-target="#viewLeaguesModal").card.boxShadowCards.text-decoration-none.mt-3.text-center.actionButton                        
+                                .card-body
+                                    h5.card-title View Activity
+                                        span.ml-4(data-feather='activity')
+
+
+
+                    //- .row
+                        .col-md-6
+                            .card.mt-4
+                                .card-header
+                                    .row
+                                        .col-md-6
+                                            h5 #{moment(fixtureOne.date).format("ddd Do MMM YYYY")}
+                                        .col-md-6.text-right
+                                            span Kick Off: #{moment(fixtureOne.kickOffTime, "LT").format("h:mm A")}
+                                .card-body
+                                    .row
+                                        .col-md-5.text-center
+                                            img.mx-auto(src=fixtureOne.homeClub.logo height="100px")
+
+                                        .col-md-2
+                                            .text-center
+                                                h3.font-weight-bold.pt-4 VS
+
+                                        .col-md-5.text-center
+                                            img(src=fixtureOne.awayClub.logo height="100px")
+                                .card-footer.text-muted
+                                    .row
+                                        .col-md-6
+                                            span #{"Stadium: " + fixtureOne.stadium}
+                                        .col-md-6.text-right
+                                            span #{"League: " + fixtureOne.league.leagueName + " " + fixtureOne.league.gender.toUpperCase()}
+
+                        .col-md-6
+                            .card.mt-4
+                                .card-header
+                                    .row
+                                        .col-md-6
+                                            h5 #{moment(fixtureTwo.date).format("ddd Do MMM YYYY")}
+                                        .col-md-6.text-right
+                                            span Kick Off: #{moment(fixtureTwo.kickOffTime, "LT").format("h:mm A")}
+                                .card-body
+                                    .row
+                                        .col-md-5.text-center
+                                            img(src=fixtureTwo.homeClub.logo height="100px")
+
+                                        .col-md-2
+                                            .text-center
+                                                h3.font-weight-bold.pt-4 VS
+
+                                        .col-md-5.text-center
+                                            img(src=fixtureTwo.awayClub.logo height="100px")
+                                .card-footer.text-muted
+                                    .row
+                                        .col-md-6
+                                            span #{"Stadium: " + fixtureTwo.stadium}
+                                        .col-md-6.text-right
+                                            span #{"League: " + fixtureTwo.league.leagueName + " " + fixtureTwo.league.gender.toUpperCase()}
+
+                    hr
+
+                    h2.mt-2 Recently Added Players
+
+                    .row
+                        each player in players
+                            .col-md-4
+                                .card.mt-4
+                                    .card-header
+                                        .row
+                                            .col-md-6
+                                                h5 #{player.firstName + " " + player.lastName}
+                                            .col-md-6.text-right
+                                                h5.text-primary #{player.jerseyNumber}
+                                    .card-body.text-center
+                                        .row
+                                            .col-md-12
+                                                img(height="200px" src=player.photo)
+                                            
+                                    .card-footer.bg-primary.text-white
+                                        .row
+                                            .col-md-6
+                                                span Country: #{player.nationality}
+                                            .col-md-6.text-right
+                                                span.text-capitalize Position: #{player.position}
+                                    //- .card-footer.bg-primary.text-white
+                                        .row
+                                            .col-md-6
+                                                span Weight: #{player.weight + "kg" }
+                                            .col-md-6.text-right
+                                                span Height: #{player.height + "cm"}
+                                    //- .card-footer.bg-primary.text-white
+                                        .row
+                                            .col-md-6
+                                                span DOB: #{moment(player.dob).format("D/M/YYYY") }
+                                            .col-md-6.text-right
+                                                span Foot: #{player.preferredFoot }
+
+                    br
+                    br
+                    br
+                    br
+
+
+
+    script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
+    script.
+        feather.replace()
+    //- <!-- Graphs -->
+    //- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    //- <script>
+    //-   var ctx = document.getElementById("myChart");
+    //-   var myChart = new Chart(ctx, {
+    //-     type: 'line',
+    //-     data: {
+    //-       labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    //-       datasets: [{
+    //-         data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+    //-         lineTension: 0,
+    //-         backgroundColor: 'transparent',
+    //-         borderColor: '#007bff',
+    //-         borderWidth: 4,
+    //-         pointBackgroundColor: '#007bff'
+    //-       }]
+    //-     },
+    //-     options: {
+    //-       scales: {
+    //-         yAxes: [{
+    //-           ticks: {
+    //-             beginAtZero: false
+    //-           }
+    //-         }]
+    //-       },
+    //-       legend: {
+    //-         display: false,
+    //-       }
+    //-     }
+    //-   });
+    //- </script>

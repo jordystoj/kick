@@ -1,0 +1,58 @@
+include ../navbar
+
+block content
+    .container.mt-5
+        .row
+            .col-md-4
+
+            .col-md-4
+                .card
+                    article.card-body
+                        h4.card-title.text-center.mb-4.mt-1 Register
+                        hr
+                        form(action="/register" method="post")
+
+                            .form-group
+                                .input-group
+                                    .input-group-prepend
+                                        span.input-group-text First Name
+                                    input.form-control(name='firstName' placeholder='John' type='text')
+
+                            .form-group
+                                .input-group
+                                    .input-group-prepend
+                                        span.input-group-text Last Name
+                                    input.form-control(name='lastName' placeholder='Smith' type='text')
+
+                            .form-group
+                                .input-group
+                                    .input-group-prepend
+                                        span.input-group-text
+                                            i.fa.fa-user
+                                    input.form-control(name='email' placeholder='Email or login' type='email')
+
+
+                            .form-group
+                                .input-group
+                                    .input-group-prepend
+                                        span.input-group-text
+                                            i.fa.fa-lock
+                                    input.form-control(name='password' placeholder='******' type='password')
+
+                            .form-group
+                                .input-group
+                                    .input-group-prepend
+                                        span.input-group-text Mobile
+                                    input.form-control(name='mobileNumber' placeholder='0400 000 000' type='text')
+
+                            .form-group
+                                .input-group
+                                    .input-group-prepend
+                                        span.input-group-text D.O.B.
+                                    input.form-control(name='dateOfBirth' type='date')
+
+                            input(type="hidden", name="admin" value="4")
+                        
+                            .form-group
+                                button.btn.btn-primary.btn-block(type='submit')  Register
+            .col-md-4

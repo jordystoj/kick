@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Kick
+        base(href="/")
+        link(rel="stylesheet", href="../stylesheets/dashboard.css")
+        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+        script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+        script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+        link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css")
+
+    body
+
+        nav.navbar.navbar-dark.fixed-top.bg-dark.flex-md-nowrap.p-0.shadow
+            a.navbar-brand.col-sm-3.col-md-2.mr-0(href='#') Kick.com
+            input.form-control.form-control-dark.w-100(type='text' placeholder='Search' aria-label='Search')
+            ul.navbar-nav.px-3
+                li.nav-item.text-nowrap
+                    a.nav-link(href='#') Sign out
+            
+        .container-fluid
+            .row
+                nav.col-md-2.d-none.d-md-block.bg-light.sidebar
+                    .sidebar-sticky
+                        ul.nav.flex-column
+                            li.nav-item
+                                a.nav-link(href='/dashboard')
+                                    span(data-feather='home') 
+                                    span Dashboard
+                            
+                            li.nav-item
+                                a.nav-link.active(href='/dashboard/players')
+                                    span(data-feather='users') 
+                                    span Players
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/teams')
+                                    span(data-feather='clipboard') 
+                                    span Teams
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/fixtures')
+                                    span(data-feather='calendar') 
+                                    span Fixtures
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/leagues')
+                                    span(data-feather='layers') 
+                                    span Leagues
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/clubs')
+                                    span(data-feather='flag') 
+                                    span Clubs
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/inbox')
+                                    span(data-feather='inbox') 
+                                    span Inbox
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/verify')
+                                    span(data-feather='award') 
+                                    span Verify
+
+                            
+                        h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
+                            span Actions
+                            a.d-flex.align-items-center.text-muted(href='#')
+                                span(data-feather='plus-circle')
+                        if check == "add"
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link.active(href='/dashboard/players/add')
+                                        span(data-feather='user-plus')
+                                        span Add Player
+                                
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/players/edit')
+                                        span(data-feather='user-check')
+                                        span Edit Player
+
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/players/transfer')
+                                        span(data-feather='users')
+                                        span Transfer Player
+                                        
+                        else if check == "edit"
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/players/add')
+                                        span(data-feather='user-plus')
+                                        span Add Player
+                                
+                                li.nav-item
+                                    a.nav-link.active(href='/dashboard/players/edit')
+                                        span(data-feather='user-check')
+                                        span Edit Player
+                                
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/players/transfer')
+                                        span(data-feather='users')
+                                        span Transfer Player
+                        else 
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/players/add')
+                                        span(data-feather='user-plus')
+                                        span Add Player
+                                
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/players/edit')
+                                        span(data-feather='user-check')
+                                        span Edit Player
+
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/players/transfer')
+                                        span(data-feather='users')
+                                        span Transfer Player
+                    
+                main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+                    .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+                        
+                        //- Change this to just a search bar icon and when you click it brings a modal to find a player
+                        h1.h2 Players
+                        form(class="form-inline my-2 my-lg-0 pull-right" action="/searchBar" method="post" ) 
+                            input(class="searchbar form-control mr-sm-2" name="searchItem" type="search" placeholder="Search For Player" aria-label="Search")
+                            button(class="btn btn-dark my-2 my-sm-0" type="submit" id="searchButton") 
+                                i(class="fas fa-search")
+
+                    if check == "add"
+                        include ../dashboard/playerForms/addForm.pug
+                        
+
+                    else if check == "edit"
+
+                        if !selectedPlayer
+                            h2.mt-2 Recently Added Players
+
+                            .row
+                                each player in recentlyAddedForEdit
+                                    .col-md-4
+                                        .card.mt-4
+                                            .card-header
+                                                .row
+                                                    .col-md-6
+                                                        h5 #{player.firstName + " " + player.lastName}
+                                                    .col-md-6.text-right
+                                                        a(href="/dashboard/players:edit?_id="+player._id).btn.btn-warning.btn-md Edit Player
+                                            .card-body.text-center
+                                                .row
+                                                    .col-md-12
+                                                        img(height="200px" src=player.photo)
+                                                .row
+                                                    .col-md-12
+                                                        h3.my-1 #{player.teamid}
+                                                    
+                                            .card-footer.bg-primary.text-white
+                                                .row
+                                                    .col-md-6
+                                                        span Country: #{player.nationality}
+                                                    .col-md-6.text-right
+                                                        span Position: #{player.position}
+                                            .card-footer.bg-primary.text-white
+                                                .row
+                                                    .col-md-6
+                                                        span Weight: #{player.weight + "kg" }
+                                                    .col-md-6.text-right
+                                                        span Height: #{player.height + "cm"}
+                                            .card-footer.bg-primary.text-white
+                                                .row
+                                                    .col-md-6
+                                                        span DOB: #{moment(player.dob).format("D/M/YYYY") }
+                                                    .col-md-6.text-right
+                                                        span Foot: #{player.preferredFoot }
+                        else if selectedPlayer 
+                            h2 Edit Players
+                            br 
+                            div(class="row center")
+                                div(class="col-sm-12 formPositioning")
+                                    div(class="mb-3 mx-auto loginCards" style="max-width: 90%;")
+                                        div(class="mx-auto")
+                                            form(action="/editplayer?_id="+selectedPlayer._id, method="post" style="max-width: 100%")
+                                                div(class="row")
+                                                    div(class="col-md-6")
+                                                        div(class="form-group")
+                                                            label() First Name
+                                                            input(type="text" class="form-control" name="firstName" value=selectedPlayer.firstName)
+                                                        div(class="form-group")
+                                                            label() Last Name
+                                                            input(type="text" class="form-control" name="lastName" value=selectedPlayer.lastName)
+                                                        div(class="form-group")
+                                                            label() Date Of Birth
+                                                            input(type="date" class="form-control" name="dob" value=selectedPlayer.dob)
+                                                        div(class="form-group")
+                                                            label() Photo URL
+                                                            input(type="text" class="form-control" name="photo" value=selectedPlayer.photo)
+                                                        
+                                                        div(class="form-group")
+                                                            label() Position
+                                                            select(class="custom-select" name="pos")
+                                                                option(selected) #{selectedPlayer.position}
+                                                                    option(value="forward") Forward
+                                                                    option(value="midfield") Midfield
+                                                                    option(value="defence") Defence
+                                                                    option(value="goalkeeper") Goalkeeper
+                                                                    
+                                                        div(class="form-group")
+                                                            label() Preferred Foot
+                                                            select(class="custom-select" name="preferredFoot")
+                                                                option(selected) #{selectedPlayer.preferredFoot}
+                                                                    option(value="right") Right
+                                                                    option(value="left") Left
+                                                                    
+                                                        
+                                                    div(class="col-md-6")
+                                                        div(class="form-group")
+                                                            label() Nationality
+                                                            select(class="custom-select" name="nationality")
+                                                                option(selected) #{selectedPlayer.nationality}
+                                                                    each country in countryList
+                                                                        option(value=country) #{country}
+                                                                    
+                                                        div(class="form-group")
+                                                            label() Select Team
+                                                            select(class="custom-select" name="team")
+                                                                option(selected) #{selectedPlayer.teamid}
+                                                                    each team in teamsList
+                                                                        option(value=team) #{team}
+
+                                                        div(class="form-group")
+                                                            label() Height (cm)
+                                                            input(type="number" class="form-control" name="height" value=selectedPlayer.height)
+
+                                                        div(class="form-group")
+                                                            label() Weight (kg)
+                                                            input(type="number" class="form-control" name="weight" value=selectedPlayer.weight)
+                                                        
+                                                        .form-group
+                                                            label() Jersey Number
+                                                            input(type="number" class="form-control" name="jerseyNumber" value=selectedPlayer.jerseyNumber)
+
+                                                button.btn.btn-warning.btn-lg.w-100(type="submit") Submit
+                    else
+                        include ../dashboard/playerForms/index.pug
+                    
+
+    script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
+    script.
+        feather.replace()

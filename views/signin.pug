@@ -1,0 +1,53 @@
+include navbar
+
+block content
+    .container.mt-5
+        .row
+            .col-md-2
+
+            .col-md-8
+                h3.text-center.mt-4.font-weight-bold Sign in
+                br
+                form(action="/signin" method="post")
+                    .form-group.w-75.mx-auto
+                        label.mt-5(for="#email") Email
+                        input.form-control(name='email' placeholder='Email or login' type='email' id="email" required style="border: 1px solid rgba(144, 144, 144, 0.2)")
+                    
+                    .form-group.w-75.mx-auto
+                        label.mt-3(for="#password") Password
+                        input.form-control(name='password' placeholder='******' type='password' required style="border: 1px solid rgba(144, 144, 144, 0.2)")
+                                    
+                    .form-group.w-75.mx-auto
+                        label.mt-3
+                        button.btn.blueGradient.btn-block.text-white(type='submit') Login  
+
+                p.text-success.text-center
+                    a.text-success(href="/register") Click here to register
+                //- .card.boxShadowCards
+                    article.card-body
+                        h4.card-title.text-center.mb-4.mt-1 Sign in
+                        hr
+                        p.text-success.text-center 
+                            a.text-success(href="/register") Click here to register
+                        form(action="/signin" method="post")
+                            .form-group
+                                .input-group
+                                    .input-group-prepend
+                                        span.input-group-text
+                                            i.fa.fa-user
+                                    input.form-control(name='email' placeholder='Email or login' type='email')
+
+
+                            .form-group
+                                .input-group
+                                    .input-group-prepend
+                                        span.input-group-text
+                                            i.fa.fa-lock
+                                    input.form-control(name='password' placeholder='******' type='password')
+                        
+                            .form-group
+                                button.btn.btn-primary.btn-block(type='submit')  Login  
+                    
+                        p.text-center
+                            a.btn(href='#') Forgot password?
+            .col-md-2

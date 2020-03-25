@@ -1,0 +1,49 @@
+h2.text-center Add League
+br 
+div(class="row center")
+    div(class="col-sm-12 formPositioning")
+        div(class="mb-3 mx-auto loginCards" style="max-width: 90%;")
+            div(class="mx-auto")
+                form(action="/dashboard/league/add", method="post" style="max-width: 100%")
+                    div(class="row")
+                        .col-md-3
+                        .col-md-6
+                            .form-group
+                                label() League Name
+                                select(class="custom-select" name="leagueName" required)
+                                    option(selected) Select League Name
+                                    option(value="npl 1") NPL 1
+                                    option(value="npl 2") NPL 2
+                                    option(value="npl 3") NPL 3
+                                                    
+                            .form-group
+                                label() Gender
+                                select(class="custom-select" name="gender" required)
+                                    option(selected) Select Gender
+                                    option(value="womens") Womens
+                                    option(value="mens") Mens
+                                    option(value="youth") Youth
+                                    //- Youth now have blue and white within the actual league
+
+                            .form-group
+                                label() Age
+                                select(class="custom-select" name="age" required)
+                                    option(selected) Select Age
+                                    option(value="first") First Grade
+                                    option(value="reserves") Reserve Grade
+                                    option(value="U20") U20
+                                    option(value="U18") U18
+                                    option(value="U17") U17
+                                    option(value="U16") U16
+                                    option(value="U15") U15
+                                    option(value="U14") U14
+                                    option(value="U13") U13
+                                                        
+                            .form-group
+                                label() State
+                                select(class="custom-select" name="state" required)
+                                    option(selected) Select State
+                                        option(value="nsw") NSW
+                                        option(value="qld") QLD
+                            button(type="submit" class="w-100 btn btn-primary") Submit
+                        .col-md-3
