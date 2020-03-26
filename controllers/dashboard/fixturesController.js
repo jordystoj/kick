@@ -39,7 +39,40 @@ getIndexFixtureCheck = async (req, res, next) => {
     const leagues = await League.find({});
     const clubs = await Club.find({});
     const teams = await Team.find({});
-    res.render('./dashboard/fixtures', { check: check, leagues: leagues, clubs, clubs, teams: teams });
+    const fixtures = await Fixture.find({});
+
+
+    // Objects for storing data sent to client
+    // let dataObjects = {};
+    // Variable where error is going to be stored
+    let statusText;
+    let statusCode = req.query.status;
+
+    // When there is no err query
+    if(!req.query.status){
+        dataObjects = { check: check, leagues: leagues, clubs, clubs, teams: teams, fixtures: fixtures}
+    }
+
+    // When somone uses to identical team ids for home and away
+    if(req.query.status === '442'){
+        statusText = "Error: You can't have two of the same teams in one fixture. Please retry"
+        dataObjects = {check: check, leagues: leagues, clubs, clubs, teams: teams, fixtures: fixtures, statusText: statusText, statusCode: statusCode};
+    }
+
+    if(req.query.status === '433'){
+        statusText = "Succes: Fixture Created"
+        dataObjects = {check: check, leagues: leagues, clubs, clubs, teams: teams, fixtures: fixtures, statusText: statusText, statusCode: statusCode};
+    }
+
+    if(req.query.status === '4212'){
+        statusText = "Error: Try again, something went wrong while trying to add fixture"
+        dataObjects = {check: check, leagues: leagues, clubs, clubs, teams: teams, fixtures: fixtures, statusText: statusText, statusCode: statusCode};
+    }
+
+
+    res.render('./dashboard/fixtures', dataObjects);
+
+
 }
 
 postAddFixture = async (req, res, next) => {
@@ -52,7 +85,7 @@ postAddFixture = async (req, res, next) => {
     const awayTeamId = req.body.awayTeam;
     const kickOffTime = req.body.kickofftime;
 
-    const homeTeam = await Team.findById(homeTeamId)
+    const homeTeam = await Team.findById(homeTeamId).exec();
 
     // find the club object for the home team
     const club = await Club.findById(homeTeam.clubid);
@@ -73,15 +106,19 @@ postAddFixture = async (req, res, next) => {
     };
     
     //Create the fixture
-    Fixture.create(newFixture, function (err) {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            res.redirect("/dashboard/fixtures/add");
-            console.log(newFixture);
-        }
-    });
+    if(homeTeamId !== awayTeamId){
+        Fixture.create(newFixture, function (err) {
+            if (err) {
+                console.log(err)
+                res.redirect("/dashboard/fixtures/add?status=4212");
+            }
+            else {
+                res.redirect("/dashboard/fixtures/add?status=433");
+            }
+        });
+    } else {
+        res.redirect("/dashboard/fixtures/add?status=442");
+    }
 }
 
 getLiveFixtureUpdate = async (req, res) => {

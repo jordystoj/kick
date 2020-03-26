@@ -179,3 +179,11 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+
+/* Alerts */
+#alert {
+  position: fixed;
+  bottom: 5px;
+  width: 50%;
+}

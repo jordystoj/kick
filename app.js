@@ -12,11 +12,21 @@ const   cookieParser = require('cookie-parser');
 let app = express();
 
 // Connecting MongoDB to the application
-mongoose.connect("mongodb://localhost/kick", {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-});
+if(process.env.NODE_ENV == 'development'){
+    mongoose.connect("mongodb://localhost/kick", {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true
+    });
+}
+
+if (process.env.NODE_ENV == 'production') {
+    mongoose.connect("mongodb+srv://jordan:0kWUADlxPLvdrsjV@kickdb-py2ed.mongodb.net/test?retryWrites=true&w=majority", {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true
+    });
+}
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -87,4 +97,5 @@ app.use("/user", passport.authenticate('jwt', {session: false }), authFunctions.
 // set the app to listen on the port
 app.listen(port, () => {
     console.log(`Server running on port: ${port}`);
+    console.log(process.env.NODE_ENV);
 });

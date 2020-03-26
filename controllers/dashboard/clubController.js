@@ -7,9 +7,48 @@ getIndexClub = async (req, res, next) => {
     res.render('./dashboard/clubs', { clubsNumber: clubsNumber, newClubs: newClubs });
 }
 
-getClubsCheck = (req, res, next) => {
+getClubsCheck = async (req, res, next) => {
     const check = req.params.check;
-    res.render('./dashboard/clubs', {check: check, teamsList: teamsList});
+    const clubs = await Club.find({}).sort({"clubName": -1});
+    const results = res.paginatedResults;
+    res.render('./dashboard/clubs', {check: check, teamsList: teamsList, clubs: clubs, results: results});
+}
+
+// Middleware pagination
+paginatedResults = (model) => {
+    return async (req, res, next) => {
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
+
+        const results = {}
+
+        if(endIndex < await model.countDocuments().exec()){
+            results.next = {
+                page: page+1,
+                limit: limit
+            }
+        }
+
+        if(startIndex > 0){
+            results.previous = {
+                page: page-1,
+                limit: limit
+            }
+        }
+
+        try {
+            results.result = await model.find().sort({"clubName": 1}).limit(limit).skip(startIndex).exec();
+        } catch (e){
+            console.log(e);
+        }
+
+        res.paginatedResults = results;
+
+        next();
+    }
 }
 
 postCreateClub = (req, res, next) => {
@@ -80,10 +119,16 @@ postEditClub = async (req, res, next) => {
     })
 }
 
+getAllClubs = async (req, res) => {
+    const clubs = await Club.find({}).sort({'clubName': -1});
+    res.render('./dashboard/allClubs', {clubs: clubs});
+}
+
 module.exports = {
     getIndexClub,
     getClubsCheck,
     postCreateClub,
     getEditClub,
-    postEditClub
+    postEditClub,
+    paginatedResults
 }

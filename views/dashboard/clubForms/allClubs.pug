@@ -1,0 +1,38 @@
+.container
+    .row
+        each club in results.result
+            .col-md-4.col-sm-12
+                .card.boxShadowCards
+                    if club.primaryColor === "#FFFFFF"
+                        .card-header(style="background: "+club.primaryColor+";")
+                            .card-title.text-black.font-weight-bold
+                                p #{ club.clubName }
+                            .card-body.text-center
+                                img(src=club.logo, height="100px")
+                    else
+                        .card-header(style="background: "+club.primaryColor+";")
+                            .card-title.text-white.font-weight-bold
+                                p #{ club.clubName }
+                            .card-body.text-center
+                                img(src=club.logo, height="100px")
+                    
+                    .card-footer.bg-white.text-center
+                        a.text-decoration.text-black(href="/clubs/"+club._id) View Profile
+
+    br
+
+    .row
+        ul.pagination.mx-auto
+            li.page-item
+                if results.previous
+                    a.page-link(href="/dashboard/clubs/all?page="+results.previous.page+"&limit="+results.previous.limit) Previous
+                else 
+                    a.page-link.disabled Previous
+
+
+            li.page-item
+                if results.next
+                    a.page-link(href="/dashboard/clubs/all?page="+results.next.page+"&limit="+results.next.limit) Next
+                else
+                    a.page-link.disabled Next
+

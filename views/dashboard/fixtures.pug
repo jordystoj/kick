@@ -118,31 +118,34 @@ html(lang="en")
                                 span(data-feather='calendar')
                                 span This week
 
-                    .row
-                        each fixture, i in fixtures
-                            .col-md-6.col-sm-12
-                                .card.boxShadowCards.mt-4
-                                    .card-title
-                                        .card-header= fixture.venue
-                                    .card-body
-                                        .row
-                                            .col-md-5.col-sm-12.text-center
-                                                img(src=homeClubs[i].logo height="100px")
-                                            .col-md-2.col-sm-12.text-center.mt-4 VS
-                                            .col-md-5.col-sm-12.text-center
-                                                img(src=awayClubs[i].logo height="100px")
-                                    .card-footer.text-center
-                                        a.btn.btn-primary.btn-md(href="/dashboard/fixtures/live/update/"+fixture._id) Update Live
-
                     if check == "add"
                         include ../dashboard/fixtureForms/addForm.pug
                     else if check == "edit"
                         include ../dashboard/fixtureForms/editForm.pug
                     else 
                         include ../dashboard/fixtureForms/index.pug
-                    
 
+                    if statusCode == '433'
+                        .d-flex.justify-content-center
+                            .alert.alert-success#alert
+                                a(href="#" class="close" data-dismiss="alert" aria-label="close") &times;
+                                p #{statusText}
+                    if statusCode == '442'
+                        .d-flex.justify-content-center
+                            .alert.alert-danger#alert
+                                a(href="#" class="close" data-dismiss="alert" aria-label="close") &times;
+                                p #{statusText}
+                    if statusCode == '4212'
+                        .d-flex.justify-content-center
+                            .alert.alert-danger#alert
+                                a(href="#" class="close" data-dismiss="alert" aria-label="close") &times;
+                                p #{statusText}
+
+        
     script(src="../scripts/fixtures.js")
     script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
     script.
         feather.replace()
+        $(document).on('ready', (e)=> {
+            $('.alert').alert();
+        })

@@ -83,6 +83,12 @@ html(lang="en")
                                     a.nav-link(href='/dashboard/clubs/edit')
                                         span(data-feather='user-check')
                                         span Edit Club
+
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/all')
+                                        span(data-feather='circle')
+                                        span View All Clubs
+
                         else if check == "edit"
                             ul.nav.flex-column.mb-2
                                 li.nav-item
@@ -94,6 +100,29 @@ html(lang="en")
                                     a.nav-link.active(href='/dashboard/clubs/edit')
                                         span(data-feather='user-check')
                                         span Edit Club
+
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/all')
+                                        span(data-feather='circle')
+                                        span View All 
+
+                        else if check == "all"
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/add')
+                                        span(data-feather='user-plus')
+                                        span Add Club
+                                
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/edit')
+                                        span(data-feather='user-check')
+                                        span Edit Club
+
+                                li.nav-item
+                                    a.nav-link.active(href='/dashboard/clubs/all')
+                                        span(data-feather='circle')
+                                        span View All Clubs
+
                         else 
                             ul.nav.flex-column.mb-2
                                 li.nav-item
@@ -105,6 +134,11 @@ html(lang="en")
                                     a.nav-link(href='/dashboard/clubs/edit')
                                         span(data-feather='user-check')
                                         span Edit Club
+                                
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/all')
+                                        span(data-feather='circle')
+                                        span View All Clubs
                                 
                     
                 main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
@@ -123,6 +157,8 @@ html(lang="en")
                         include ../dashboard/clubForms/addForm.pug
                     else if check == "edit"
                         include ../dashboard/clubForms/editForm.pug
+                    else if check == "all"
+                        include ../dashboard/clubForms/allClubs.pug
                     else 
                         include ../dashboard/clubForms/index.pug                        
                     
