@@ -35,7 +35,7 @@ block content
                                     img.card-img-top(height="150px" src=post.thumbnail) 
                                     .card-body
                                         h4.card-title #{ post.title }
-                                        p.card-text #{ post.postContent.replace(/(([^\s]+\s\s*){20})(.*)/,"$1…") }
+                                        p.card-text #{ post.postContent.split(' ').slice(0,20).join(' ') }...
                                         a.btn.btn-primary(href="/post/"+post._id) Read More
                     .col-md-1
                     .col-md-4.mt-4

@@ -1,0 +1,21 @@
+include ./navbar
+
+block content
+    .postWrapper.mx-auto(style="padding-left: 25%; padding-right: 25%; position: relative;")
+
+        div(style="top: 30px; position: absolute; width: 50% !important;")
+            //- Post Title
+            p.h1.mt-4.py-2 #{ post.title }
+
+            //- Displaying the authors name
+            span.h5.mt-3.py-1.pl-3(style="border-left: 3px solid orange") #{ post.author.firstName } #{ post.author.lastName }
+
+            span.float-right.text-secondary.pt-2 #{moment(post.createdAt).format('MMM Do')}
+
+            //- Post Image
+            .text-align-center
+                img.w-100.my-4.mx-auto(src=post.thumbnail height="250px" style="object-fit: cover; object-position: center;")
+
+            p.text-left.mt-4.pt-3 #{post.postContent}
+
+

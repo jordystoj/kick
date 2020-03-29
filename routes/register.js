@@ -44,9 +44,6 @@ router.post('/register', passport.authenticate('signup', { session : false }) , 
 
           const token = jwt.sign({ user : body }, process.env.JWT_TOKEN);
           
-          // return res
-          //         .cookie('jwt', token, {maxAge: 360000, signed: true, secret: "secret"})
-          //         .redirect("/dashboard?admin="+req.body.admin); // Look at where this goes
           if(user.admin === 0){
             return res
               .cookie('jwt', token, {maxAge: 21600000, signed: true, secret: "secret"})

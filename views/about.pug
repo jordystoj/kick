@@ -1,0 +1,29 @@
+include navbar
+
+block content
+    //- Header Section of About Page
+    .mx-auto#aboutHeaderWrapper(style="padding-left: 20%; height: 80vh; position: relative;")
+        p.h1(style="padding-top: 2em; padding-bottom: 1em;") About Us
+
+        p.text-secondary.py-2(style="border-left: 4px solid #ddd; padding-left: 20px;") Kick.net is a website built for all amateur leagues in Australia. <br> We focus on easily managing player statistics, leagues, fixtures and clubs!
+
+        p(style="bottom: 20px; right:50%; position: absolute; color: #ddd;")
+            i.fas.fa-chevron-down.blinking(style=" font-size: 40px;")
+
+    //- Section One Info
+    .mx-auto#firstWrapperAbout(style="padding-left: 20%; height: 100vh; background-color: #ddd; position: relative")
+        p.h1(style="padding-top: 2em; padding-bottom: 0.4em;") Statistics
+        p.text-secondary.py-2(style="border-left: 4px solid orange; padding-left: 20px;") "Athletes perform better when their statistics are being tracked and analysed" - Creator
+
+        //- Have a little explanation and then have a row with 3 columns on 3 features to do with player statistics
+        .row(style="bottom: 40%; position: absolute; width: 64%")
+            .col-md-4.col-sm-12
+                p.h4 Players
+                p.text-justify All players get their game stats recorded in a database. This include goals, assists, fouls and offsides.
+            .col-md-4.col-sm-12
+                p.h4 Fixtures
+                p.text-justify Every fixture played will be updated live. It will include goals, shots, fouls, cards, lineups and formations.
+            .col-md-4.col-sm-12
+                p.h4 Clubs
+                p.text-justify Clubs and adminstrators can view how their club is performing across the board. This can build insight into where to place more resources.
+

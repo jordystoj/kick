@@ -41,7 +41,6 @@ getPostCreateForm = async (req, res, next) => {
 saveNewPost = async (req, res, next) => {
     const user = await User.findById(req.user._id);
     // Get data from form
-    console.log(req.body)
     const title = req.body.title;
     const postContent = req.body.postContent;
     let thumbnail = req.body.thumbnail
