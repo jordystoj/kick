@@ -1,11 +1,11 @@
-.modal#goalModal
+.modal#foulModal
     .modal-dialog
         .modal-content
             .modal-header
                 .modal-title
-                    h3 Add Goal
+                    h3 Add Foul
             .modal-body
-                form(action="/dashboard/fixtures/"+fixture._id+"/goal", method="post")
+                form(action="/dashboard/fixtures/"+fixture._id+"/foul", method="post")
                     //- Time Elapsed
                     .form-group
                         label(for="#elapsed") Elapsed
@@ -20,34 +20,23 @@
                         option(selected) Select Player
 
                     //- Assist
-                    label.mt-2(for="#assist") Assist
-                    select.custom-select.assist(name="assistId" id="assist")
-                        option(selected) Select Player
-                        option(value="noAssist") No Assist
+                    input(type="hidden", name="assistId" value=" ")
 
                     //- Type
-                    input(type="hidden", name="type" value="goal")
+                    input(type="hidden", name="type" value="foul")
 
                     //- Detail
                     label.mt-2 Detail
                     select.custom-select(name="detail" id="detail")
                         option(selected) Select Detail
-                        option(value="freekick") Freekick
-                        option(value="penalty") Penalty
-                        option(value="inGame") In Game
-                        option(value="corner") Corner
+                        option(value="foul") Foul
+                        option(value="handball") Handball
+                        option(value="yellowCard") Yellow Card
+                        option(value="redCard") Red Card
+                        option(value="yellowToRed") Second Yellow
                     
                     //- Comments
                     label.mt-2 Comments
-                    input(type="text" name="comments" class="form-control" placeholder="eg. inside the box...")
+                    input(type="text" name="comments" class="form-control" placeholder="eg. slide tackle, wasting time...")
 
-                    input.mt-4.btn.btn-md.btn-success.w-100(type="submit", value="Add Goal")
-
-
-
-
-
-
-
-
-
+                    input.mt-4.btn.btn-md.btn-success.w-100(type="submit", value="Add Foul")

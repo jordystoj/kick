@@ -1,0 +1,37 @@
+.modal#substituteModal
+    .modal-dialog
+        .modal-content
+            .modal-header
+                .modal-title
+                    h3 Make Substitue
+            .modal-body
+                form(action="/dashboard/fixtures/"+fixture._id+"/substitute", method="post")
+                    //- Time Elapsed
+                    .form-group
+                        label(for="#elapsed") Elapsed
+                        input.form-control.w-25(type="number" name="elapsed" id="elapsed")
+                    
+                    //- Team Id 
+                    input(type="hidden", name="teamId" class="teamId")
+
+                    //- Player - player coming on
+                    label(for="#player") Player (coming on)
+                    select.custom-select.player(name="playerId" id="player")
+                        option(selected) Select Player
+
+                    //- Assist - Player coming off
+                    label.mt-2(for="#assist") Assist (coming off)
+                    select.custom-select.assist(name="assistId" id="assist")
+                        option(selected) Select Player
+
+                    //- Type
+                    input(type="hidden", name="type" value="subsitute")
+
+                    //- Detail
+                    input(type="hidden", name="detail" value=" ")
+                    
+                    //- Comments
+                    label.mt-2 Comments
+                    input(type="text" name="comments" class="form-control" placeholder="eg. player off injured...")
+
+                    input.mt-4.btn.btn-md.btn-success.w-100(type="submit", value="Make Substitute")

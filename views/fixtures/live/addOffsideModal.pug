@@ -1,11 +1,11 @@
-.modal#goalModal
+.modal#offsideModal
     .modal-dialog
         .modal-content
             .modal-header
                 .modal-title
-                    h3 Add Goal
+                    h3 Add Offside
             .modal-body
-                form(action="/dashboard/fixtures/"+fixture._id+"/goal", method="post")
+                form(action="/dashboard/fixtures/"+fixture._id+"/offside", method="post")
                     //- Time Elapsed
                     .form-group
                         label(for="#elapsed") Elapsed
@@ -23,31 +23,15 @@
                     label.mt-2(for="#assist") Assist
                     select.custom-select.assist(name="assistId" id="assist")
                         option(selected) Select Player
-                        option(value="noAssist") No Assist
 
                     //- Type
-                    input(type="hidden", name="type" value="goal")
+                    input(type="hidden", name="type" value="offside")
 
                     //- Detail
-                    label.mt-2 Detail
-                    select.custom-select(name="detail" id="detail")
-                        option(selected) Select Detail
-                        option(value="freekick") Freekick
-                        option(value="penalty") Penalty
-                        option(value="inGame") In Game
-                        option(value="corner") Corner
+                    input(type="hidden", name="detail" value=" ")
                     
                     //- Comments
                     label.mt-2 Comments
-                    input(type="text" name="comments" class="form-control" placeholder="eg. inside the box...")
+                    input(type="text" name="comments" class="form-control" placeholder="eg. close call...")
 
-                    input.mt-4.btn.btn-md.btn-success.w-100(type="submit", value="Add Goal")
-
-
-
-
-
-
-
-
-
+                    input.mt-4.btn.btn-md.btn-success.w-100(type="submit", value="Add Offside")

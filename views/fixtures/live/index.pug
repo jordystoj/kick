@@ -29,7 +29,7 @@ html(lang="en")
                     img(src=awayClub.logo height="100px")
             button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white( data-target="#goalModal" data-toggle="modal" data-team=awayTeamId style="height: 33.3vh; border-radius: 0; font-size: 1.3em; ") Goal
         .d-flex.justify-content-start.align-items-center
-            button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white(onclick="addFoul("+homeTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Foul
+            button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white( data-target="#foulModal" data-toggle="modal" data-team=homeTeamId style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Foul
             //- button.btn.btn-md.btn-secondary.w-50.font-weight-bold.text-info(style="height: 10vh; border-radius: 0; font-size: 1.3em; ")
             //- button.btn.btn-md.w-50.font-weight-bold.text-info(style="height: 23.3vh; border-radius: 0; font-size: 1.3em; ")
             .d-flex.flex-column.align-items-center.w-50
@@ -43,15 +43,21 @@ html(lang="en")
 
                         #halfButton
                 .w-100(style="height:23.3vh; border-radius: 0;")
-            button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white(onclick="addFoul("+awayTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em; ") Foul
+            button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white( data-target="#foulModal" data-toggle="modal" data-team=awayTeamId style="height: 33.3vh; border-radius: 0; font-size: 1.3em; ") Foul
         .d-flex.justify-content-between.align-items-center
-            button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white(onclick="addFoul("+homeTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Substitute
-            button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white(onclick="addOffside("+homeTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Offside
-            button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white(onclick="addOffside("+awayTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Offside
-            button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white(onclick="addFoul("+awayTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Substitute
+            button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white( data-target="#substituteModal" data-toggle="modal" data-team=homeTeamId style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Substitute
+            button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white( data-target="#offsideModal" data-toggle="modal" data-team=homeTeamId style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Offside
+            button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white( data-target="#offsideModal" data-toggle="modal" data-team=awayTeamId style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Offside
+            button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white( data-target="#substituteModal" data-toggle="modal" data-team=awayTeamId style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Substitute
 
 
+        //- All Modals Go Here
         include ./addGoalModal.pug
+        include ./addFoulModal.pug
+        include ./addSubstituteModal.pug
+        include ./addOffsideModal.pug
+
+        //- Export this script to seperate file
         script.
             function startMatch(fixtureId) {
                 //- Post to the server that the game has started
@@ -91,8 +97,6 @@ html(lang="en")
                 }, 1000*10);
             }
 
-
-
             //- Build with react dom #Clock
             function buildClock(elapsed, status, fixtureId){
                 $('#clock').html('');
@@ -128,13 +132,13 @@ html(lang="en")
                 var modal = $(this);
                 modal.find('.modal-body .teamId').val(teamId);
 
-                $('#player').empty();
-                $('#assist').empty();
-                modal.find('#player').append(
+                $('.player').empty();
+                $('.assist').empty();
+                modal.find('.player').append(
                     $("<option/>", {text: "Select Player", selected: true})
                 )
 
-                modal.find('#assist').append(
+                modal.find('.assist').append(
                     $("<option/>", {text: "No Assist", value: "noAssist", selected: true})
                 )
 
@@ -143,11 +147,11 @@ html(lang="en")
 
                     awayPlayers.forEach(function(data){
 
-                        modal.find('#player').append(
+                        modal.find('.player').append(
                             $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id, class: 'playerList'})
                         )
 
-                        modal.find('#assist').append(
+                        modal.find('.assist').append(
                             $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id })
                         )
                     })
@@ -158,12 +162,132 @@ html(lang="en")
                             $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id, class: 'playerList'})
                         )
 
-                        modal.find('#assist').append(
+                        modal.find('.assist').append(
                             $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id })
                         )
                     })
                 }
             })
+
+            $('#foulModal').on('show.bs.modal', function(event){
+
+                var button = $(event.relatedTarget);
+                var teamId = button.data('team');
+                var modal = $(this);
+                modal.find('.modal-body .teamId').val(teamId);
+
+                //- Empty all the players when opened from select
+                $('.player').empty();
+                modal.find('.player').append(
+                    $("<option/>", {text: "Select Player", selected: true})
+                )
+
+                if(teamId == awayTeamId){
+                    //- Iterate through each away player
+                    awayPlayers.forEach(function(data){
+                        //- Populate the select player field in modal
+                        modal.find('.player').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id, class: 'playerList'})
+                        )
+                    })
+                } else if (teamId == homeTeamId){
+                    //- Iterate through each home player
+                    homePlayers.forEach(function(data){
+                        //- Populate the select player field in modal
+                        modal.find('.player').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id, class: 'playerList'})
+                        )
+                    })
+                }
+            })
+
+            $('#offsideModal').on('show.bs.modal', function(event){
+                //- const teamId = teamId;
+                var button = $(event.relatedTarget);
+                var teamId = button.data('team');
+                var modal = $(this);
+                modal.find('.modal-body .teamId').val(teamId);
+
+                $('.player').empty();
+                $('.assist').empty();
+                modal.find('.player').append(
+                    $("<option/>", {text: "Select Player", selected: true})
+                )
+
+                modal.find('.assist').append(
+                    $("<option/>", {text: "Select Player", selected: true})
+                )
+
+                if(teamId == awayTeamId){
+
+                    awayPlayers.forEach(function(data){
+
+                        modal.find('.player').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id, class: 'playerList'})
+                        )
+
+                        modal.find('.assist').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id })
+                        )
+                    })
+                } else if (teamId == homeTeamId){
+                    homePlayers.forEach(function(data){
+
+                        modal.find('.player').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id, class: 'playerList'})
+                        )
+
+                        modal.find('.assist').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id })
+                        )
+                    })
+                }
+            })
+
+            $('#substituteModal').on('show.bs.modal', function(event){
+                //- const teamId = teamId;
+                var button = $(event.relatedTarget);
+                var teamId = button.data('team');
+                var modal = $(this);
+                modal.find('.modal-body .teamId').val(teamId);
+
+                $('.player').empty();
+                $('.assist').empty();
+                modal.find('.player').append(
+                    $("<option/>", {text: "Select Player", selected: true})
+                )
+
+                modal.find('.assist').append(
+                    $("<option/>", {text: "Select Player", selected: true})
+                )
+
+                if(teamId == awayTeamId){
+
+                    awayPlayers.forEach(function(data){
+
+                        modal.find('.player').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id, class: 'playerList'})
+                        )
+
+                        modal.find('.assist').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id })
+                        )
+                    })
+                } else if (teamId == homeTeamId){
+                    homePlayers.forEach(function(data){
+
+                        modal.find('.player').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id, class: 'playerList'})
+                        )
+
+                        modal.find('.assist').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id })
+                        )
+                    })
+                }
+            })
+
+            
 
 
 

@@ -134,7 +134,9 @@ postAddFixture = async (req, res, next) => {
 }
 
 getLiveFixtureUpdate = async (req, res) => {
+    // Get the fixture id from url param
     const fixtureId = req.params.fixtureId;
+    // Get the fixture using the id
     const fixture = await Fixture.findById(fixtureId);
 
     // Get home and away clubs
@@ -145,25 +147,32 @@ getLiveFixtureUpdate = async (req, res) => {
     const homeTeamId = fixture.homeTeam;
     const awayTeamId = fixture.awayTeam;
 
-    const matchEventsArray = fixture.matchEvents
+    // An array with all match event ids
+    const matchEventsIdArray = fixture.matchEvents
 
     // Match Events Length
-    const matchEventsLength = matchEventsArray.length;
+    const matchEventsLength = matchEventsIdArray.length;
 
     // Goals
     const homeTeamGoals = [];
     const awayTeamGoals = [];
-    let fullEventsArray = [];
-    for (let i = 0; i < matchEventsLength; i++) {
-        fullEventsArray.push(await MatchEvent.find({_id: matchEventsArray[i]}));
 
-        if(fullEventsArray[i][0].teamId == homeTeamId){
+    // Array storing entire event objects
+    let fullEventsArray = [];
+
+    for (let i = 0; i < matchEventsLength; i++) {
+        // Find the event and push the object to fullEventsArray
+        fullEventsArray.push(await MatchEvent.find({_id: matchEventsIdArray[i]}));
+
+        // If home team and event type is goal push the goal to home team goals array
+        if(fullEventsArray[i][0].teamId == homeTeamId && fullEventsArray[i][0].type == "goal"){
             homeTeamGoals.push(fullEventsArray[i][0]);
-        } else if( fullEventsArray[i][0].teamId == awayTeamId){
+        } else if( fullEventsArray[i][0].teamId == awayTeamId && fullEventsArray[i][0].type == "goal"){
             awayTeamGoals.push(fullEventsArray[i][0]);
         }
     }
 
+    // Elapsed: game timer
     const elapsed = await Fixture.findById(fixtureId).elapsed;
 
     // Make an array of players from each team
@@ -284,6 +293,96 @@ addGoal = async (req, res, next) => {
     })
 }
 
+addFoul = async (req, res, next) => {
+    const fixtureId = req.params.fixtureId;
+    const updateQuery = { _id: fixtureId }
+
+    const foul = {
+        elapsed: req.body.elapsed,
+        teamId: req.body.teamId,
+        playerId: req.body.playerId,
+        assistId: req.body.assistId,
+        type: req.body.type,
+        detail: req.body.detail,
+        comments: req.body.comments
+    }
+
+    await MatchEvent.create(foul, async function(err, event){
+        if(err){
+            // Render Error Page
+            throw err;
+        } else {
+            await Fixture.updateOne(updateQuery, {"$push": {"matchEvents": event._id}}).exec((err, fixture)=>{
+                if(err){
+                    console.log(err);
+                } else {
+                    res.redirect("/dashboard/fixtures/live/update/"+fixtureId)
+                }
+            })
+        }
+    })
+}
+
+addOffside = async (req, res, next) => {
+    const fixtureId = req.params.fixtureId;
+    const updateQuery = { _id: fixtureId }
+
+    const offside = {
+        elapsed: req.body.elapsed,
+        teamId: req.body.teamId,
+        playerId: req.body.playerId,
+        assistId: req.body.assistId,
+        type: req.body.type,
+        detail: req.body.detail,
+        comments: req.body.comments
+    }
+
+    await MatchEvent.create(offside, async function(err, event){
+        if(err){
+            // Render Error Page
+            throw err;
+        } else {
+            await Fixture.updateOne(updateQuery, {"$push": {"matchEvents": event._id}}).exec((err, fixture)=>{
+                if(err){
+                    console.log(err);
+                } else {
+                    res.redirect("/dashboard/fixtures/live/update/"+fixtureId)
+                }
+            })
+        }
+    })
+}
+
+makeSubstitute = async (req, res, next) => {
+    const fixtureId = req.params.fixtureId;
+    const updateQuery = { _id: fixtureId }
+
+    const substitute = {
+        elapsed: req.body.elapsed,
+        teamId: req.body.teamId,
+        playerId: req.body.playerId,
+        assistId: req.body.assistId,
+        type: req.body.type,
+        detail: req.body.detail,
+        comments: req.body.comments
+    }
+
+    await MatchEvent.create(substitute, async function(err, event){
+        if(err){
+            // Render Error Page
+            throw err;
+        } else {
+            await Fixture.updateOne(updateQuery, {"$push": {"matchEvents": event._id}}).exec((err, fixture)=>{
+                if(err){
+                    console.log(err);
+                } else {
+                    res.redirect("/dashboard/fixtures/live/update/"+fixtureId)
+                }
+            })
+        }
+    })
+}
+
 module.exports = {
     getIndexFixture,
     getIndexFixtureCheck,
@@ -292,5 +391,8 @@ module.exports = {
     postStartMatch,
     updateTime,
     getTime,
-    addGoal
+    addGoal,
+    addFoul,
+    addOffside,
+    makeSubstitute
 }
