@@ -116,19 +116,10 @@ html(lang="en")
                 console.log(id)
             }
 
-            //- function addGoal(goal) {
-                //- Popup modal
-                //- $('#goalModal').on('show.bs.modal', function(event){
-                //-     //- const teamId = teamId;
-                //-     var button = $(event.relatedTarget);
-                //-     var teamId = button.data('teamId');
-                //-     var modal = $(this);
-                //-     modal.find('.fuck').val(teamId);
-                //- })
-            //- }
-
             const awayTeamId = !{JSON.stringify(awayTeamId)};
             const awayPlayers = !{JSON.stringify(awayPlayers)};
+            const homeTeamId = !{JSON.stringify(homeTeamId)};
+            const homePlayers = !{JSON.stringify(homePlayers)};
 
             $('#goalModal').on('show.bs.modal', function(event){
                 //- const teamId = teamId;
@@ -160,21 +151,19 @@ html(lang="en")
                             $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id })
                         )
                     })
+                } else if (teamId == homeTeamId){
+                    homePlayers.forEach(function(data){
+
+                        modal.find('#player').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id, class: 'playerList'})
+                        )
+
+                        modal.find('#assist').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id })
+                        )
+                    })
                 }
             })
-
-            //- $('#goalModal').on('close.bs.modal', function(event){
-            //-     var modal = $(this);
-            //-     $('#player').empty();
-            //-     $('#assist').empty();
-            //-     modal.find('#player').append(
-            //-         $("<option/>", {text: "Select Player", selected: true})
-            //-     )
-
-            //-     modal.find('#assist').append(
-            //-         $("<option/>", {text: "Select Player", selected: true})
-            //-     )
-            //- })
 
 
 
