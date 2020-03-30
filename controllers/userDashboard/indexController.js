@@ -13,7 +13,7 @@ getIndexUserDashboard = async (req, res, next) => {
     const user = await User.findById(req.user._id);
     const posts = await Post.find({}).sort({"createdAt": -1}).limit(15);
     // Change the clubs to find the clubs from the database
-    res.render('./userDashboard/index', {user: user, moment: moment, clubs: clubs, posts:posts});
+    res.status(200).render('./userDashboard/index', {user: user, moment: moment, clubs: clubs, posts:posts});
 }
 
 getPostsPage = async (req, res, next) => {

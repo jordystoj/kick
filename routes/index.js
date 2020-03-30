@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 
 // Index route
 router.get('/', async function(req, res, next) {
-    res.render('./index', {moment: moment, clubs: clubsList});
+    res.status(200).render('./index', {moment: moment, clubs: clubsList});
 })
 
 router.get('/about', function(req, res) {
@@ -25,6 +25,10 @@ router.get('/post/:id', async (req, res) => {
 
 function checkUser(token){
     return jwt.verify(token, process.env.JWT_TOKEN);
+}
+
+(req, res, next) => {
+   console.log(res.statusCode);
 }
 
 module.exports = router;

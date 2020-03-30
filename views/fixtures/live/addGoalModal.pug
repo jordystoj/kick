@@ -5,4 +5,49 @@
                 .modal-title
                     h3 Add Goal
             .modal-body
-                form(action="", method="post")
+                form(action="/dashboard/fixtures/"+fixture._id+"/goal", method="post")
+                    //- Time Elapsed
+                    .form-group
+                        label(for="#elapsed") Elapsed
+                        input.form-control.w-25(type="number" name="elapsed" id="elapsed")
+                    
+                    //- Team Id 
+                    input(type="hidden", name="teamId" class="teamId")
+
+                    //- Player
+                    label(for="#player") Player
+                    select.custom-select(name="playerId" id="player")
+                        option(selected) Select Player
+
+                    //- Assist
+                    label.mt-2(for="#assist") Assist
+                    select.custom-select(name="assistId" id="assist")
+                        option(selected) Select Player
+                        option(value="noAssist") No Assist
+
+                    //- Type
+                    input(type="hidden", name="type" value="goal")
+
+                    //- Detail
+                    label.mt-2 Detail
+                    select.custom-select(name="detail" id="detail")
+                        option(selected) Select Detail
+                        option(value="freekick") Freekick
+                        option(value="penalty") Penalty
+                        option(value="inGame") In Game
+                        option(value="corner") Corner
+                    
+                    //- Comments
+                    label.mt-2 Comments
+                    input(type="text" name="comments" class="form-control" placeholder="eg. inside the box...")
+
+                    input.mt-4.btn.btn-md.btn-success.w-100(type="submit", value="Add Goal")
+
+
+
+
+
+
+
+
+

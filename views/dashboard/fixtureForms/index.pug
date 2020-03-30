@@ -4,6 +4,8 @@
             .card.boxShadowCards.mt-4
                 .card-title
                     .card-header= fixture.venue
+                        span.float-right= moment(fixture.date).format('MMM Do')
+
                 .card-body
                     .row
                         .col-md-5.col-sm-12.text-center
@@ -12,4 +14,4 @@
                         .col-md-5.col-sm-12.text-center
                             img(src=awayClubs[i].logo height="100px")
                 .card-footer.text-center
-                    a.btn.btn-primary.btn-md(href="/dashboard/fixtures/live/update/"+fixture._id) Update Live
+                    a.btn.btn-primary.btn-md(href="/dashboard/fixtures/live/update/"+fixture._id) Update

@@ -52,7 +52,7 @@ var FixtureSchema = new mongoose.Schema({
         required: true
     },
     matchEvents : {
-        type: [String], //Match Events id
+        type: [String], //Match Events id.
         required: false
     },
     lineups: {

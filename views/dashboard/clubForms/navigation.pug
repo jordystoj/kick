@@ -51,35 +51,59 @@ nav.navbar.navbar-dark.fixed-top.bg-dark.flex-md-nowrap.p-0.shadow
                     a.d-flex.align-items-center.text-muted(href='#')
                         span(data-feather='plus-circle')
                 if check == "add"
-                    ul.nav.flex-column.mb-2
-                        li.nav-item
-                            a.nav-link.active(href='/dashboard/clubs/add')
-                                span(data-feather='user-plus')
-                                span Add Club
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link.active(href='/dashboard/clubs/add')
+                                        span(data-feather='user-plus')
+                                        span Add Club
                                 
-                        li.nav-item
-                                a.nav-link(href='/dashboard/clubs/edit')
-                                span(data-feather='user-check')
-                                span Edit Club
-                else if check == "edit"
-                    ul.nav.flex-column.mb-2
-                        li.nav-item
-                            a.nav-link(href='/dashboard/clubs/add')
-                                span(data-feather='user-plus')
-                                span Add Club
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/edit')
+                                        span(data-feather='user-check')
+                                        span Edit Club
+
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/all?page=1&limit=3')
+                                        span(data-feather='circle')
+                                        span View All Clubs
+
+                        else if check == "edit"
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/add')
+                                        span(data-feather='user-plus')
+                                        span Add Club
                                 
-                        li.nav-item
-                            a.nav-link.active(href='/dashboard/clubs/edit')
-                                span(data-feather='user-check')
-                                span Edit Club
-                else 
-                    ul.nav.flex-column.mb-2
-                        li.nav-item
-                            a.nav-link(href='/dashboard/clubs/add')
-                                span(data-feather='user-plus')
-                                span Add Club
+                                li.nav-item
+                                    a.nav-link.active(href='/dashboard/clubs/edit')
+                                        span(data-feather='user-check')
+                                        span Edit Club
+
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/all?page=1&limit=3')
+                                        span(data-feather='circle')
+                                        span View All Clubs
+
+                        else if check == "all"
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/add')
+                                        span(data-feather='user-plus')
+                                        span Add Club
                                 
-                        li.nav-item
-                            a.nav-link(href='/dashboard/clubs/edit')
-                                span(data-feather='user-check')
-                                span Edit Club
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/edit')
+                                        span(data-feather='user-check')
+                                        span Edit Club
+
+                                li.nav-item
+                                    a.nav-link.active(href='/dashboard/clubs/all?page=1&limit=3')
+                                        span(data-feather='circle')
+                                        span View All Clubs
+
+                        else 
+                            ul.nav.flex-column.mb-2
+                                li.nav-item
+                                    a.nav-link(href='/dashboard/clubs/add')
+                                        span(data-feather='user-plus')
+                                        span Add Club

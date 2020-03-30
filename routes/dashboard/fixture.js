@@ -26,6 +26,8 @@ router.post('/fixtures/getTime', controller.getTime);
 
 router.post('/fixtures/updateTime', controller.updateTime);
 
+router.post('/fixtures/:fixtureId/goal', controller.addGoal);
+
 // Because club id's are known and also league; a team can be found
 /*async function findTeams(homeTeam, awayTeam, leagueid) {
     

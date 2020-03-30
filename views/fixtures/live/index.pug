@@ -15,7 +15,7 @@ html(lang="en")
 
     body
         .d-flex.justify-content-between.align-items-center
-            button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white(onclick="addGoal('"+homeTeamId+"')" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Goal
+            button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white( data-target="#goalModal" data-toggle="modal" data-team=homeTeamId style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Goal
 
             .row.w-25
                 .col-sm-6.text-center.mx-auto
@@ -27,7 +27,7 @@ html(lang="en")
                     .text-center.pt-2(style="height: 23.3vh; border-radius: 0; font-size:3em")= awayTeamGoals.length
                 .col-sm-6.text-center
                     img(src=awayClub.logo height="100px")
-            button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white(onclick="addGoal('"+awayTeamId+"')" style="height: 33.3vh; border-radius: 0; font-size: 1.3em; ") Goal
+            button.btn.btn-md.btn-primary.w-25.font-weight-bold.text-white( data-target="#goalModal" data-toggle="modal" data-team=awayTeamId style="height: 33.3vh; border-radius: 0; font-size: 1.3em; ") Goal
         .d-flex.justify-content-start.align-items-center
             button.btn.btn-md.btn-warning.w-25.font-weight-bold.text-white(onclick="addFoul("+homeTeamId+")" style="height: 33.3vh; border-radius: 0; font-size: 1.3em;") Foul
             //- button.btn.btn-md.btn-secondary.w-50.font-weight-bold.text-info(style="height: 10vh; border-radius: 0; font-size: 1.3em; ")
@@ -116,10 +116,65 @@ html(lang="en")
                 console.log(id)
             }
 
-            function addGoal(teamId) {
+            //- function addGoal(goal) {
                 //- Popup modal
-                $('#goalModal').modal('toggle')
-            }
+                //- $('#goalModal').on('show.bs.modal', function(event){
+                //-     //- const teamId = teamId;
+                //-     var button = $(event.relatedTarget);
+                //-     var teamId = button.data('teamId');
+                //-     var modal = $(this);
+                //-     modal.find('.fuck').val(teamId);
+                //- })
+            //- }
+
+            const awayTeamId = !{JSON.stringify(awayTeamId)};
+            const awayPlayers = !{JSON.stringify(awayPlayers)};
+
+            $('#goalModal').on('show.bs.modal', function(event){
+                //- const teamId = teamId;
+                var button = $(event.relatedTarget);
+                var teamId = button.data('team');
+                var modal = $(this);
+                modal.find('.modal-body .teamId').val(teamId);
+
+                $('#player').empty();
+                $('#assist').empty();
+                modal.find('#player').append(
+                    $("<option/>", {text: "Select Player", selected: true})
+                )
+
+                modal.find('#assist').append(
+                    $("<option/>", {text: "No Assist", value: "noAssist", selected: true})
+                )
+
+                if(teamId == awayTeamId){
+                    
+
+                    awayPlayers.forEach(function(data){
+
+                        modal.find('#player').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id, class: 'playerList'})
+                        )
+
+                        modal.find('#assist').append(
+                            $("<option/>", {text: data.firstName+" "+data.lastName, value: data._id })
+                        )
+                    })
+                }
+            })
+
+            //- $('#goalModal').on('close.bs.modal', function(event){
+            //-     var modal = $(this);
+            //-     $('#player').empty();
+            //-     $('#assist').empty();
+            //-     modal.find('#player').append(
+            //-         $("<option/>", {text: "Select Player", selected: true})
+            //-     )
+
+            //-     modal.find('#assist').append(
+            //-         $("<option/>", {text: "Select Player", selected: true})
+            //-     )
+            //- })
 
 
 

@@ -3,13 +3,17 @@ const Club = require("../../models/Club");
 const Team = require("../../models/Team");
 const Fixture = require("../../models/Fixture");
 const MatchEvent = require('../../models/MatchEvents');
+const moment = require('moment');
+const Player = require('../../models/Player');
 
 getIndexFixture = async (req, res, next) => {
+    // Getting all fixtures, leagues, clubs and teams from the db
     const fixtures = await Fixture.find({});
     const leagues = await League.find({});
     const clubs = await Club.find({});
     const teams = await Team.find({});
 
+    // Initialise arrays for homeClubs and homeTeams
     let homeTeams = [];
     let homeClubs = [];
     let awayTeams = [];
@@ -27,10 +31,18 @@ getIndexFixture = async (req, res, next) => {
         awayClubs.push(await Club.findById({ _id: awayTeams[j].clubid }))
     }
 
-    console.log(fixtures);
 
-
-    res.render('./dashboard/fixtures', {leagues: leagues, clubs, clubs, teams: teams, fixtures: fixtures, homeClubs: homeClubs, awayClubs: awayClubs})
+    res.render('./dashboard/fixtures', 
+        {
+            leagues: leagues, 
+            clubs, clubs, 
+            teams: teams, 
+            fixtures: fixtures, 
+            homeClubs: homeClubs, 
+            awayClubs: awayClubs,
+            moment: moment
+        }
+    )
 }
 
 // Fixtures with a check
@@ -141,12 +153,22 @@ getLiveFixtureUpdate = async (req, res) => {
     // Goals
     const homeTeamGoals = [];
     const awayTeamGoals = [];
+    let fullEventsArray = [];
     for (let i = 0; i < matchEventsLength; i++) {
-        homeTeamGoals.push(await MatchEvent.find({ $and: [ { _id: matchEventsArray[i]._id }, { teamId: homeTeamId}]}));
-        awayTeamGoals.push(await MatchEvent.find({ $and: [ { _id: matchEventsArray[i]._id }, { teamId: awayTeamId}]}));
+        fullEventsArray.push(await MatchEvent.find({_id: matchEventsArray[i]}));
+
+        if(fullEventsArray[i][0].teamId == homeTeamId){
+            homeTeamGoals.push(fullEventsArray[i][0]);
+        } else if( fullEventsArray[i][0].teamId == awayTeamId){
+            awayTeamGoals.push(fullEventsArray[i][0]);
+        }
     }
 
     const elapsed = await Fixture.findById(fixtureId).elapsed;
+
+    // Make an array of players from each team
+    const homePlayers = await Player.find({ teamid: homeTeamId }).exec();
+    const awayPlayers = await Player.find({ teamid: awayTeamId }).exec();
 
     res.render('./fixtures/live/index', 
         {
@@ -157,7 +179,9 @@ getLiveFixtureUpdate = async (req, res) => {
             awayTeamId: awayTeamId,
             homeTeamGoals: homeTeamGoals,
             awayTeamGoals: awayTeamGoals,
-            elapsed: elapsed
+            elapsed: elapsed,
+            homePlayers: homePlayers,
+            awayPlayers: awayPlayers
         });
 }
 
@@ -230,6 +254,36 @@ findFixture = async (fixtureId) => {
     return fixture
 }
 
+addGoal = async (req, res, next) => {
+    const fixtureId = req.params.fixtureId;
+    const updateQuery = { _id: fixtureId }
+
+    const goal = {
+        elapsed: req.body.elapsed,
+        teamId: req.body.teamId,
+        playerId: req.body.playerId,
+        assistId: req.body.assistId,
+        type: req.body.type,
+        detail: req.body.detail,
+        comments: req.body.comments
+    }
+
+    await MatchEvent.create(goal, async function(err, event){
+        if(err){
+            // Render Error Page
+            throw err;
+        } else {
+            await Fixture.updateOne(updateQuery, {"$push": {"matchEvents": event._id}}).exec((err, fixture)=>{
+                if(err){
+                    console.log(err);
+                } else {
+                    res.redirect("/dashboard/fixtures/live/update/"+fixtureId)
+                }
+            })
+        }
+    })
+}
+
 module.exports = {
     getIndexFixture,
     getIndexFixtureCheck,
@@ -237,5 +291,6 @@ module.exports = {
     getLiveFixtureUpdate,
     postStartMatch,
     updateTime,
-    getTime
+    getTime,
+    addGoal
 }
