@@ -29,19 +29,14 @@ block content
             .card-body
                 .row
                     .col-md-7.mt-3
-                        .d-flex-column
-                            .card.boxShadowCards.w-100
-                                img.card-img-top(height="150px" src="https://mens.nplnsw.com.au/wp-content/uploads/sites/5/2017/03/2019083001_JN_4345_5D0F543ECB81B22795B0664E0315C982-2600x700_c.jpg") 
-                                .card-body
-                                    h4.card-title Article Title
-                                    p.card-text Breif statement from the actual post itself
-                                    a.btn.btn-primary(href="#") Read More
-                            .card.boxShadowCards.w-100.mt-3
-                                img.card-img-top(height="150px" src="https://mens.nplnsw.com.au/wp-content/uploads/sites/5/2017/03/2019083001_JN_4345_5D0F543ECB81B22795B0664E0315C982-2600x700_c.jpg") 
-                                .card-body
-                                    h4.card-title Article Title
-                                    p.card-text Breif statement from the actual post itself
-                                    a.btn.btn-primary(href="#") Read More
+                        each post in posts
+                            .d-flex-column
+                                .card.boxShadowCards.w-100.mt-3
+                                    img.card-img-top(height="150px" src=post.thumbnail) 
+                                    .card-body
+                                        h4.card-title #{ post.title }
+                                        p.card-text #{ post.postContent.split(' ').slice(0,20).join(' ') }...
+                                        a.btn.btn-primary(href="/post/"+post._id) Read More
                     .col-md-1
                     .col-md-4.mt-4
                         .d-flex-column

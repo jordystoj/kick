@@ -8,7 +8,8 @@ const jwt = require('jsonwebtoken');
 
 // Index route
 router.get('/', async function(req, res, next) {
-    res.status(200).render('./index', {moment: moment, clubs: clubsList});
+    const posts = await Post.find({}).sort({ "createdAt": -1});
+    res.status(200).render('./index', {moment: moment, clubs: clubsList, posts: posts});
 })
 
 router.get('/about', function(req, res) {
@@ -24,7 +25,11 @@ router.get('/post/:id', async (req, res) => {
 })
 
 function checkUser(token){
-    return jwt.verify(token, process.env.JWT_TOKEN);
+    if(token){
+        return jwt.verify(token, process.env.JWT_TOKEN);
+    } else {
+        return;
+    }
 }
 
 (req, res, next) => {

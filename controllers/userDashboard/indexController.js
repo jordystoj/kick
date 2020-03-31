@@ -8,6 +8,7 @@ const Player = require('../../models/Player');
 const Team = require('../../models/Team');
 const Club = require('../../models/Club');
 const League = require('../../models/League');
+const jwt = require('jsonwebtoken');
 
 getIndexUserDashboard = async (req, res, next) => {
     const user = await User.findById(req.user._id);
@@ -18,7 +19,7 @@ getIndexUserDashboard = async (req, res, next) => {
 
 getPostsPage = async (req, res, next) => {
     const user = await User.findById(req.user._id);
-    const posts = await Post.find({ "author.id": user._id})
+    const posts = await Post.find({ "author.id": user._id});
     res.render('./userDashboard/posts', {user: user, moment: moment, posts: posts });
 }
 
@@ -27,16 +28,12 @@ getPostCreateForm = async (req, res, next) => {
     res.render('./userDashboard/postCreateForm', {user: user});
 }
 
-// const storage = multer.diskStorage({
-//     destination: path.join(__dirname, './public/uploads/'),
-//     filename: function(req, file, cb){
-//         cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
-//     }
-// })
-
-// const upload = multer({
-//     storage: storage
-// }).single('thumbnail');
+getProfilePage = async (req, res, next) => {
+    const jwtUser = jwt.verify(req.signedCookies['jwt'], process.env.JWT_TOKEN);
+    const user = await User.findById(jwtUser.user._id);
+    const page = req.query.page;
+    res.render('./userDashboard/profile', {user: user, page: page, moment: moment});
+}
 
 saveNewPost = async (req, res, next) => {
     const user = await User.findById(req.user._id);
@@ -233,4 +230,5 @@ module.exports = {
     ajaxTeamSearch,
     ajaxClubSearch,
     ajaxLeagueSearch,
+    getProfilePage
 }

@@ -9,6 +9,9 @@ router.get('/posts', userDashboardController.getPostsPage);
 
 router.get('/posts/create', userDashboardController.getPostCreateForm);
 
+// The profile page
+router.get('/profile', userDashboardController.getProfilePage);
+
 // Create a new article/post (tip = these routes have a /user in front; the form needs it but not the route)
 router.post('/posts/create', userDashboardController.saveNewPost);
 
@@ -23,5 +26,7 @@ router.post('/club/search', userDashboardController.ajaxClubSearch);
 
 // Allows for players to be searched when looked up
 router.post('/league/search', userDashboardController.ajaxLeagueSearch);
+
+
 
 module.exports = router;

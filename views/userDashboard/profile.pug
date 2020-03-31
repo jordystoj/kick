@@ -1,0 +1,105 @@
+include ../navbar
+
+block content
+    #wrapper
+        #sidebar-wrapper
+            ul
+                li
+                    i.fas.fa-user.mr-2.index
+                    a(href="/user/profile?page=index").index Your Profile
+                li
+                    i.fas.fa-lock.mr-2.security
+                    a(href="/user/profile?page=security").security Security
+                li
+                    i.fas.fa-id-badge.mr-2.account
+                    a(href="/user/profile?page=account").account Account
+
+        #content-wrapper
+            #content.pl-5
+                .container
+                    //- Entry Profile Page
+                    if page == "index"
+                        p.h2.mb-5 Your Profile
+
+                        .mb-1
+                            .listTitleContainer
+                                span.mr-3(style="font-weight: 600;") First Name
+                            span #{ user.firstName }
+                        br
+                        .mb-1
+                            .listTitleContainer
+                                span.mr-3(style="font-weight: 600") Last name
+                            span #{ user.lastName }
+                        br
+                        .mb-1
+                            .listTitleContainer
+                                span.mr-3(style="font-weight: 600") Email
+                            span #{ user.email }
+                        br
+                        .mb-1
+                            .listTitleContainer
+                                span.mr-3(style="font-weight: 600") Mobile Number
+                            span #{ user.mobileNumber }
+                        br
+                        .mb-1
+                            .listTitleContainer
+                                span.mr-3(style="font-weight: 600") Date Of Birth
+                            span #{ moment(user.dateOfBirth).format("Do MMM YYYY") }
+                        br
+                        .mb-1
+                            .listTitleContainer
+                                span.mr-3(style="font-weight: 600") Password
+                            a(href="/user/profile?page=security" style="text-decoration: none; color: black;") Change Password
+                        
+                        .pt-5
+                                a.btn.btn-warning.btn-small(href="/user/profile?page=index&change=true" style="border-radius: 30px; width: 200px;") Change Details
+
+                    if page == "security"
+                        p.h2.mb-5 Security
+
+                        .mb-4
+                            span.mr-3(style="font-weight: 600") 2 Factor Authentication
+                            label.switch
+                                input.checkbox(type="checkbox", name="toggleVerify" id=user._id)
+                                span.slider.round
+
+                        .pt-3
+                            a.btn.btn-warning.btn-sm(href="/user/profile?page=security&change=true" style="border-radius: 30px; width: 200px;") Change Password
+                        
+                        .my-2
+                            small(style="color: #ddd")
+                                i.fas.fa-info-circle.mr-2
+                                span We cannot display your password.
+                    
+                    if page == "account"
+                        p.h4 This page will include:
+                        p A users favourite team
+                        p State where the user lives
+                        p Bio of the user
+                        p The amount of posts they have created
+                        p How many people are subscribed to their page
+                        p The amount of likes they have in total
+                        p More stats like that to get them staying on the platform ...
+
+
+
+
+
+
+
+                        
+
+    script.
+        const page = !{JSON.stringify(page)};
+
+        $(document).ready((e)=>{
+            $("#sidebar-wrapper li a").removeClass('active')
+            $("#sidebar-wrapper li").removeClass('active')
+            if(page == "security"){
+                $(".security").addClass('active');
+            } else if (page == "account"){
+                $(".account").addClass('active');
+            }  else if(page == "index"){
+                $(".index").addClass('active');
+            }
+        })
