@@ -1,0 +1,95 @@
+include ../navbar.pug
+
+block content
+    .container
+
+        .card.w-100.mt-3
+            .card-header(style="background:"+club.primaryColor)
+                .card-title
+                    if club.primaryColor !== "#FFFFFF" || club.primaryColor !== "#FFF"
+
+
+                        #titleImageWrapper.float-left.mr-2(style="display: inline-block;")
+                            img(src=player.photo style="width:8em;")
+                        
+                        #titleInfoWrapper.float-left(style="display: inline-block;")
+                            p.h3.text-white.mt-2 #{ player.firstName } #{ player.lastName }
+                            p.h4.text-white #{ player.position.split('').slice(0,3).join('').toUpperCase() }
+                            p.h4.text-white #{ player.jerseyNumber }
+                        
+                        #clubImgWrapper.float-right(style="display: inline-block;")
+                            img(src=club.logo style=" height: 100px;")
+
+                    if club.primaryColor == "#FFFFFF" || club.primaryColor == "#FFF"
+                        #titleWrapper.float-left(style="display: inline-block;")
+                            p.h3.text-black.mt-2 #{ player.firstName } #{ player.lastName }
+                            p.h4.text-black #{ player.jerseyNumber }
+                        
+                        #clubImgWrapper.float-right(style="display: inline-block;")
+                            img(src=club.logo style=" height: 100px;")
+            .card-body(style="padding: 0 !important;")
+                .row(style="margin-right: 0 !important;margin-left: 0 !important;")
+                    .col-md-6.p-0
+                        div.m-0(class="table table-color table-dark")
+                            table( style="width:100%")
+                                thead
+                                    
+                                tbody
+                                    tr
+                                        th() DOB
+                                        td= moment(player.dob).format("L")
+                                    tr
+                                        th() Age
+                                        td= moment(player.dob).fromNow(true)
+                                    tr
+                                        th() Height
+                                        td= player.height + " cm"
+                                    tr
+                                        th() Weight
+                                        td= player.weight + " kg"
+                                    tr
+                                        th Position
+                                        td(class="text-capitalize")= player.position
+                                    tr
+                                        th Jersey Number
+                                        td= player.jerseyNumber
+                                    tr
+                                        th Preferred Foot
+                                        td(class="text-capitalize")= player.preferredFoot
+                                    tr
+                                        th Nationality
+                                        td(class="text-capitalize")= player.nationality
+
+                    .col-md-6.p-0
+                        div.m-0(class="table table-color table-dark")
+                            table( style="width:100%")
+                                thead
+                                    
+                                tbody
+                                    tr
+                                        th() Goals
+                                        td 25
+                                    tr
+                                        th() Assists
+                                        td 35
+                                    tr
+                                        th() Miutes Played
+                                        td 43183
+                                    tr 
+                                        th() Yellow Cards
+                                        td 12
+                                    tr 
+                                        th() Red Cards
+                                        td 0
+                                    tr 
+                                        th() Yellow To Red
+                                        td 1
+                                    tr 
+                                        th() Sub Off
+                                        td 4
+                                    tr 
+                                        th() Sub On
+                                        td 1
+            .card-footer
+                
+

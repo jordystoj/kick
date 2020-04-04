@@ -1,0 +1,19 @@
+include ../navbar
+
+block content
+    #wrapper
+        #sidebar-wrapper
+            ul
+                li
+                    i.fas.fa-user.mr-2.index
+                    a(href="/user/profile?page=index").index Find Leagues
+                li
+                    i.fas.fa-lock.mr-2.security
+                    a(href="/user/profile?page=security").security Security
+                li
+                    i.fas.fa-id-badge.mr-2.account
+                    a(href="/user/profile?page=account").account Account
+
+        #content-wrapper
+            #content.pl-5
+                .container

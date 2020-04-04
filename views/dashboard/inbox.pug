@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Kick
+        base(href="/")
+        link(rel="stylesheet", href="../stylesheets/dashboard.css")
+        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+        script(src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous")
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+        script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+        link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css")
+
+    body
+
+        nav.navbar.navbar-dark.fixed-top.bg-dark.flex-md-nowrap.p-0.shadow
+            a.navbar-brand.col-sm-3.col-md-2.mr-0(href='#') Kick.com
+            input.form-control.form-control-dark.w-100(type='text' placeholder='Search' aria-label='Search')
+            ul.navbar-nav.px-3
+                li.nav-item.text-nowrap
+                    a.nav-link(href='#') Sign out
+            
+        .container-fluid
+            .row
+                nav.col-md-2.d-none.d-md-block.bg-light.sidebar
+                    .sidebar-sticky
+                        ul.nav.flex-column
+                            li.nav-item
+                                a.nav-link(href='/dashboard')
+                                    span(data-feather='home') 
+                                    span Dashboard
+                            
+                            li.nav-item
+                                a.nav-link(href='/dashboard/players')
+                                    span(data-feather='users') 
+                                    span Players
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/teams')
+                                    span(data-feather='clipboard') 
+                                    span Teams
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/fixtures')
+                                    span(data-feather='calendar') 
+                                    span Fixtures
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/leagues')
+                                    span(data-feather='layers') 
+                                    span Leagues
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/clubs')
+                                    span(data-feather='flag') 
+                                    span Clubs
+
+                            li.nav-item
+                                a.nav-link.active(href='/dashboard/inbox')
+                                    span(data-feather='inbox') 
+                                    span Inbox
+
+                            li.nav-item
+                                a.nav-link(href='/dashboard/verify')
+                                    span(data-feather='award') 
+                                    span Verify
+
+
+                main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+                    .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+                        h1.h2 Inbox (#{unanswered})
+                        .btn-toolbar.mb-2.mb-md-0
+                            .btn-group.mr-2
+                                button.btn.btn-sm.btn-outline-secondary Share
+                                button.btn.btn-sm.btn-outline-secondary Export
+                                    
+                            button.btn.btn-sm.btn-outline-secondary.dropdown-toggle
+                                span(data-feather='calendar')
+                                span This week
+
+                    table.table.table-striped.w-100.mt-4
+                        thead
+                            tr
+                                td.text-center From
+                                td.text-center Subject
+                                td.text-center Content
+                                td.text-center View               
+                                td.text-center Complete                
+                        tbody
+                            each message in messages
+                                if message.answered == false
+                                    tr
+                                        td.text-center.text-uppercase= message.from
+                                        td.text-center.text-capitalize= message.subject
+                                        td.text-center.text-capitalize #{message.content.split(' ').slice(0,10).join(' ')}... 
+                                        td.text-center
+                                            button.btn.btn-sm.btn-warning(type="button" data-toggle="modal" data-target="#fullMessage" data-from=message.from data-subject=message.subject data-content=message.content) View Full Message
+                                        td.text-center.text-uppercase
+                                                label.switch
+                                                    input.checkbox(type="checkbox", name="toggleVerify" id=message._id)
+                                                    span.slider.round
+    .modal#successAlert
+        .modal-dialog
+            .modal-content
+                .alert.m-0.alert-success#successAlert.alert-dismissible(role="alert")
+                    p Message is completed
+                    a(class="close" data-dismiss="modal" aria-label="Close" href="/dashboard/inbox")
+                        span(data-feather="x")
+
+    .modal#fullMessage
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    p.h3 Message
+                .modal-body
+                    form
+                        label() Email
+                        input.form-control#from(type="email", name="from")
+
+                        label.mt-3() Subject
+                        input.form-control#subject(type="text", name="subject")
+
+                        label.mt-3() Content
+                        textarea.form-control#content(name="content")
+                .modal-footer
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span X
+
+    script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
+    script.
+        feather.replace();
+
+         $('.checkbox').on('change', (e) => {
+            approve(e.target.id);
+        })
+
+        function approve(messageId){
+            //- Send ajax to approve this clubadmin based on user id
+            $.ajax({
+                url: "/dashboard/inbox/complete",
+                type: "POST",
+                data: {messageId: messageId},
+                dataType: "text",
+                success: (data) => {
+                    $('#successAlert').modal();
+                }
+            })
+        }
+
+        $('#fullMessage').on('show.bs.modal', function(e) {
+
+            //get data-id attribute of the clicked element
+            var from = $(e.relatedTarget).data('from');
+            var subject = $(e.relatedTarget).data('subject');
+            var content = $(e.relatedTarget).data('content');
+
+            //populate the textbox
+            $(e.currentTarget).find('#from').val(from);
+            $(e.currentTarget).find('#subject').val(subject);
+            $(e.currentTarget).find('#content').val(content);
+        });

@@ -63,6 +63,9 @@ const fixtureDashboard = require('./routes/dashboard/fixture')
 const userIndexDashboard = require('./routes/userDashboard/index');
 const playerDashboard = require('./routes/dashboard/player');
 const infoRoutes = require('./routes/info/info');
+const leagueRoutes = require('./routes/leagues/index');
+const inboxDashboard = require('./routes/dashboard/inbox');
+const playerRoutes = require('./routes/players/index');
 // Not Secure
 const clubIndexRoutes = require('./routes/club/index');
 
@@ -79,8 +82,14 @@ app.use('/info', infoRoutes);
 // Club dashboard routes
 app.use('/club', clubIndexRoutes);
 
+// League Routes - Not Protected
+app.use('/leagues', leagueRoutes);
+
 // Club dashboard routes
 app.use('/clubs' , passport.authenticate('jwt', {session: false }), authFunctions.isClubAdmin, clubRoutes);
+
+// Player Profile Pages
+app.use('/player', playerRoutes);
 
 // Admin Routes
 app.use('/dashboard',passport.authenticate('jwt', {session: false }), authFunctions.isWebsiteAdmin, dashboard);
@@ -90,6 +99,7 @@ app.use('/dashboard',passport.authenticate('jwt', {session: false }), authFuncti
 app.use('/dashboard',passport.authenticate('jwt', {session: false }), authFunctions.isWebsiteAdmin, fixtureDashboard);
 app.use('/dashboard',passport.authenticate('jwt', {session: false }), authFunctions.isWebsiteAdmin, playerDashboard);
 app.use('/dashboard',passport.authenticate('jwt', {session: false }), authFunctions.isWebsiteAdmin, verifyDashboard);
+app.use('/dashboard',passport.authenticate('jwt', {session: false }), authFunctions.isWebsiteAdmin, inboxDashboard);
 
 // User Routes
 app.use("/user", passport.authenticate('jwt', {session: false }), authFunctions.isUser, userIndexDashboard);

@@ -120,7 +120,62 @@
         height: 100vh;
         background: #eee;
     }
+
+    /* Contact Us Page */
+
+    #contactForm {
+        display: none;
+    }
+
+    #contactFormAlert {
+        width: 85% !important;
+    }
+
+    #contactInfo {
+        padding: 0;
+        text-align: center;
+    }
+
+    #infoWrapper {
+        width: 75% !important;
+        margin: 0 auto;
+    }
+
+    #contactFormToggle {
+        display: block !important;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    #contactPage .row {
+        margin-right: 0 !important;
+    }
+
+    #contactFormModal textarea {
+        width: 100% !important;
+        height: 20vh !important;
+    }
+    /* Contact Us Page */
 }
+
+/* Contact Us Page */
+#contactFormAlert {
+    width: 20%;
+}
+
+#infoWrapper {
+    width: 50%;
+}
+
+#contactFormToggle {
+    display: none;
+}
+
+#contactForm textarea {
+    width: 100% !important;
+    height: 20% !important;
+}
+/* Contact Us Page */
 
 .blinking {
     animation: blinker 3s linear infinite;
@@ -177,7 +232,7 @@
 }
 
 .active {
-    color: blue !important;
+    color: #008cff !important;
 }
 
 .listTitleContainer {

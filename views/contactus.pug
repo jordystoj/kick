@@ -1,0 +1,76 @@
+include navbar.pug
+
+block content
+    #contactPage
+        .row(height="100vh")
+            .col-md-6#contactForm
+                .container
+                    .card.mt-4.mx-auto.boxShadowCards(style="width: 50%;")
+                        .card-header
+                            .card-title
+                                p.h4 Contact Us
+
+                        .card-body
+                            form.form-group(action="/contactus", method="post",)
+                                label() Email
+                                input.form-control(type="email", name="from")
+
+                                label.mt-3() Subject
+                                input.form-control(type="text", name="subject")
+
+                                label.mt-3() Content
+                                textarea.form-control(name="content")
+
+                                input.mt-3.btn.btn-success.btn-md(type="submit", value="Submit")
+            
+            .col-md-6.col-sm-12#contactInfo
+                .container
+                    #infoWrapper
+                        p.h3.mt-3 Our Details
+                        ul.list-group
+                            li.list-group-item Email: info@kick.com.au
+                            li.list-group-item Phone: 0452 248 919
+                            li.list-group-item Creator: Jordan Stojcevski
+
+        
+    #contactFormToggle.mt-4
+        button.btn.btn-md.btn-primary(type="button" data-toggle="modal" data-target="#contactFormModal") Contact Us
+
+    
+    //- Alert
+    if type == 'success'
+        .d-flex.justify-content-center.mt-4
+            .alert.alert-success#contactFormAlert
+                a(href="#" class="close" data-dismiss="alert" aria-label="close") &times;
+                p 
+                    span.text-bold Success: 
+                    span Your message was sent!
+
+    //- Contact Form Modal
+    .modal#contactFormModal.mt-5
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    p.h3 Contact Form
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                .modal-body
+                    form.form-group(action="/contactus", method="post",)
+                            label() Email
+                            input.form-control(type="email", name="from")
+
+                            label.mt-3() Subject
+                            input.form-control(type="text", name="subject")
+
+                            label.mt-3() Content
+                            textarea.form-control(name="content")
+
+                            input.mt-3.btn.btn-success.btn-md(type="submit", value="Submit")
+                
+
+
+    script.
+        $(document).on('ready', (e)=> {
+            $('.alert').alert();
+        })
+                    
